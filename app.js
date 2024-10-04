@@ -156,3 +156,5 @@ app.get('/logout', (req, res) => {
     req.session.destroy(); // ทำลาย session
     res.redirect('/login'); // เปลี่ยนเส้นทางไปยังหน้า login
 });
+
+
