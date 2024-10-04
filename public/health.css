@@ -2,7 +2,6 @@ body {
     font-family: Arial, sans-serif;
     background-color: #f0f4f8;
     margin: 0;
-    padding: 20px;
     color: #333;
 }
 
@@ -11,9 +10,18 @@ header {
     margin-bottom: 20px;
 }
 
-header h1 {
-    color: #007BFF;
-    margin-bottom: 10px;
+h1 {
+    font-family: "Kanit", sans-serif; /* เปลี่ยนฟอนต์เป็น Kanit จาก Google Fonts */
+    font-size: 4em; /* ขนาดตัวอักษรใหญ่ */
+    color: #f2f2f2; /* สีเขียวสดใส */
+    text-align: center; /* จัดให้อยู่ตรงกลาง */
+    margin-top: 30px;
+    text-shadow: 3px 3px 8px rgba(0, 0, 0, 0.5); /* เงาเข้มใต้ตัวอักษร */
+    padding: 20px;
+    background: linear-gradient(135deg, #ee0909, #000000); /* พื้นหลังไล่สีสดใส */
+    border-radius: 15px; /* ขอบมน */
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3); /* เพิ่มเงารอบหัวข้อ */
+    position: relative; /* ทำให้ไอคอนสามารถจัดตำแหน่งได้ */
 }
 
 header p {
