@@ -3,6 +3,8 @@ const express = require('express')
 const morgan = require('morgan')
 const mongoose = require('mongoose')
 const blogRoutes = require('./routes/blogRoutes')
+const firstRoutes = require('./routes/firstRoutes')
+
 const methodOverride = require('method-override'); //สำหรับแก้ไขข้อมูล
 
 const bcrypt = require('bcryptjs');
@@ -62,6 +64,9 @@ app.get('/about', (req,res)=>{
 })
 
 app.use('/blogs',blogRoutes)
+
+
+app.use('/fitst',firstRoutes)
 
 app.get('/salad', (req, res)=>{
     res.render('salad', { menutitle: 'Food Menu',website: 'Healthy Food',menu1: 'Fruit Salad'})
