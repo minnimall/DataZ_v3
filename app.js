@@ -5,6 +5,10 @@ const mongoose = require('mongoose')
 const blogRoutes = require('./routes/blogRoutes')
 const methodOverride = require('method-override'); //สำหรับแก้ไขข้อมูล
 
+const bcrypt = require('bcryptjs');
+const User = require('./models/User'); // นำเข้าจากไฟล์ User.js
+
+
 //ทำการเรียก module หรือ function "express" ขึ้นมาทำงานและสร้าง
 const app = express()
 
@@ -55,7 +59,79 @@ app.get('/salad', (req, res)=>{
     res.render('salad', { menutitle: 'Food Menu',website: 'Healthy Food',menu1: 'Fruit Salad'})
 })
 
-app.use((req,res) => {
-    //res.status(404).sendFile('./blog/404.html', {root: __dirname})
-    res.status(404).render('404', { mytitle: '404'})
-}) 
+// app.use((req,res) => {
+//     //res.status(404).sendFile('./blog/404.html', {root: __dirname})
+//     res.status(404).render('404', { mytitle: '404'})
+// }) 
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+app.get('/register', (req, res) => {
+    res.render('register', { title: 'Register' });
+});
+
+app.post('/register', async (req, res) => {
+    const { username, password } = req.body;
+
+    try {
+        let user = await User.findOne({ username });
+        if (user) {
+            return res.status(400).send('ผู้ใช้นี้มีอยู่แล้ว');
+        }
+
+        const salt = await bcrypt.genSalt(10);
+        const hashedPassword = await bcrypt.hash(password, salt);
+
+        user = new User({
+            username,
+            password: hashedPassword
+        });
+
+        await user.save();
+        res.redirect('/login');
+    } catch (err) {
+        console.error('Registration error:', err); // แสดงข้อผิดพลาดในคอนโซล
+        res.status(500).send('เกิดข้อผิดพลาด'); // ส่งข้อความผิดพลาด
+    }
+});
+
+
+// Route - ล็อกอิน
+app.get('/login', (req, res) => {
+    res.render('login', { title: 'Login' });
+});
+
+app.post('/login', async (req, res) => {
+    const { username, password } = req.body;
+
+    try {
+        const user = await User.findOne({ username });
+        if (!user) {
+            return res.status(400).send('ผู้ใช้ไม่ถูกต้อง');
+        }
+
+        const isMatch = await bcrypt.compare(password, user.password);
+        if (!isMatch) {
+            return res.status(400).send('รหัสผ่านไม่ถูกต้อง');
+        }
+
+        // หากล็อกอินสำเร็จ สามารถสร้าง session หรือ token ที่นี่
+        res.redirect('/'); // เปลี่ยนเส้นทางไปยังหน้าหลัก
+    } catch (err) {
+        console.error('Login error:', err);
+        res.status(500).send('เกิดข้อผิดพลาด');
+    }
+});
+
+
+// Route - Dashboard
+app.get('/dashboard', (req, res) => {
+    res.render('dashboard', { title: 'Dashboard' });
+});
+
+// Route - Logout
+app.get('/logout', (req, res) => {
+    res.clearCookie('token');
+    res.redirect('/login');
+});
+/////////////////////////////////////////////////////////////////////////////////////////////////////////
