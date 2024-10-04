@@ -38,32 +38,19 @@ app.use(express.static(__dirname + '/node_modules/bootstrap/dist'));
 app.use(methodOverride('_method'));
 app.use(morgan('dev'));
 
-// Middleware ตรวจสอบการเข้าสู่ระบบ
-const checkAuth = (req, res, next) => {
-    if (req.session.username) {
-        next(); // อนุญาตให้เข้าถึง
-    } else {
-        res.redirect('/login'); // เปลี่ยนเส้นทางไปยังหน้า login
+// Route - หน้าแรก
+app.get('/', async (req, res) => {
+    try {
+        const blogs = await Blog.find(); // ดึงข้อมูลบล็อกจากฐานข้อมูล
+        res.render('blogs/index', { 
+            username: req.session.username, 
+            blogs: blogs, // ส่งตัวแปร blogs ไปที่ View
+            mytitle: 'Welcome' // เพิ่ม mytitle ที่นี่
+        });
+    } catch (err) {
+        console.error('Error fetching blogs:', err);
+        res.status(500).send('เกิดข้อผิดพลาดในการดึงข้อมูลบล็อก');
     }
-};
-
-// Middleware ตรวจสอบการเข้าสู่ระบบสำหรับทุกเส้นทาง
-const redirectToLoginIfNotAuth = (req, res, next) => {
-    if (!req.session.username) {
-        res.redirect('/login'); // ถ้ายังไม่ได้เข้าสู่ระบบให้ไปหน้า login
-    } else {
-        next(); // อนุญาตให้เข้าถึง
-    }
-};
-
-// ใช้ middleware ใน routes ที่ต้องการ
-app.use('/first', checkAuth, firstRoutes);
-app.use('/blogs', checkAuth, blogRoutes); // ป้องกันการเข้าถึงเส้นทางบล็อก
-app.use('/health', checkAuth, healthRoutes); // ป้องกันการเข้าถึงเส้นทางสุขภาพ
-
-// Route - หน้าแรก (เปลี่ยนเส้นทางไปที่ login เสมอ)
-app.get('/', redirectToLoginIfNotAuth, (req, res) => {
-    res.redirect('/login');
 });
 
 // Route - เกี่ยวกับ
