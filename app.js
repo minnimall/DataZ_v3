@@ -148,3 +148,9 @@ app.get('/logout', (req, res) => {
 app.use((req, res) => {
     res.status(404).render('404', { mytitle: '404' });
 });
+
+// Route - Logout
+app.get('/logout', (req, res) => {
+    req.session.destroy(); // ทำลาย session
+    res.redirect('/login'); // เปลี่ยนเส้นทางไปยังหน้า login
+});
