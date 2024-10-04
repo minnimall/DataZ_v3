@@ -46,7 +46,9 @@ app.use(morgan('dev'))
 app.get('/', (req,res)=>{
     res.redirect('/blogs')
 })
-
+app.get('/h', (req,res)=>{
+    res.render('health',{title:'Health Care'})
+})
 app.get('/about', (req,res)=>{
     //res.send('<h1>This is about page</h1>')
     //res.sendFile('./blog/about.html', {root: __dirname})
@@ -54,6 +56,8 @@ app.get('/about', (req,res)=>{
 })
 
 app.use('/blogs',blogRoutes)
+
+app.use('/health',healthRoutes)
 
 app.get('/salad', (req, res)=>{
     res.render('salad', { menutitle: 'Food Menu',website: 'Healthy Food',menu1: 'Fruit Salad'})
