@@ -3,6 +3,7 @@ const morgan = require('morgan');
 const mongoose = require('mongoose');
 const blogRoutes = require('./routes/blogRoutes');
 const firstRoutes = require('./routes/firstRoutes');
+const healthRoutes = require('./routes/healthRoutes');
 
 const methodOverride = require('method-override'); // สำหรับแก้ไขข้อมูล
 const bcrypt = require('bcryptjs');
