@@ -1,0 +1,99 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f4f8;
+    margin: 0;
+    padding: 20px;
+    color: #333;
+}
+
+header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+header h1 {
+    color: #007BFF;
+    margin-bottom: 10px;
+}
+
+header p {
+    font-size: 16px;
+    color: #555;
+}
+
+.article {
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin: 20px 0;
+    transition: transform 0.3s;
+}
+
+.article:hover {
+    transform: scale(1.02);
+}
+
+.article h2 {
+    margin: 0;
+    color: #007BFF;
+}
+
+.article h3 {
+    color: #555;
+    margin: 5px 0;
+}
+
+.article p {
+    line-height: 1.6;
+    margin: 10px 0 0 0;
+}
+
+footer {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 14px;
+    color: #777;
+}
+
+/* Responsive design */
+@media (max-width: 600px) {
+    body {
+        padding: 10px;
+    }
+
+    .article {
+        padding: 15px;
+    }
+
+    header h1 {
+        font-size: 24px;
+    }
+
+    header p {
+        font-size: 14px;
+    }
+    
+}
+
+.article {
+    cursor: pointer; /* เปลี่ยนเคอร์เซอร์เป็นมือเมื่อวางเมาส์ที่ article */
+    border: 1px solid #ddd; /* กรอบรอบ article */
+    border-radius: 8px; /* มุมโค้ง */
+    padding: 15px; /* ระยะห่างภายใน */
+    margin: 20px 0; /* ระยะห่างด้านบนและด้านล่าง */
+    transition: background-color 0.3s; /* เปลี่ยนสีพื้นหลังเมื่อวางเมาส์ */
+}
+
+.article:hover {
+    background-color: #f7f7f7; /* เปลี่ยนพื้นหลังเมื่อวางเมาส์ */
+}
+
+.article a {
+    text-decoration: none; /* ไม่มีขีดเส้นใต้ */
+    color: inherit; /* ใช้สีเดียวกับข้อความ */
+}
+
+.article h2, .article h3 {
+    margin: 0; /* ไม่มีระยะห่าง */
+}
