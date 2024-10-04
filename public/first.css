@@ -9,7 +9,7 @@ html,
         background-color: rgb(240, 239, 239);
       }
       h1 {
-        font-family: "Impact", sans-serif; /* ฟอนต์ที่ดูแข็งแรง */
+        font-family: "Kanit", sans-serif; /* เปลี่ยนฟอนต์เป็น Kanit จาก Google Fonts */
         font-size: 4em; /* ขนาดตัวอักษรใหญ่ */
         color: #f2f2f2; /* สีเขียวสดใส */
         text-align: center; /* จัดให้อยู่ตรงกลาง */
