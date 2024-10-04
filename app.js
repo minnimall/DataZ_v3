@@ -3,6 +3,7 @@ const morgan = require('morgan');
 const mongoose = require('mongoose');
 const blogRoutes = require('./routes/blogRoutes');
 const firstRoutes = require('./routes/firstRoutes');
+const profileRoutes = require('./routes/profileRoutes');
 const healthRoutes = require('./routes/healthRoutes');
 
 const methodOverride = require('method-override'); // สำหรับแก้ไขข้อมูล
@@ -63,6 +64,7 @@ app.get('/', redirectToLoginIfNotAuth, (req, res) => {
 
 // ใช้ middleware ใน routes ที่ต้องการ
 app.use('/first', checkAuth, firstRoutes);
+app.use('/profile', checkAuth, profileRoutes);
 app.use('/blogs', checkAuth, blogRoutes); // ป้องกันการเข้าถึงเส้นทางบล็อก
 app.use('/health', checkAuth, healthRoutes); // ป้องกันการเข้าถึงเส้นทางสุขภาพ
 
