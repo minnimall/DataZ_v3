@@ -2,6 +2,8 @@ const express = require('express');
 const morgan = require('morgan');
 const mongoose = require('mongoose');
 const blogRoutes = require('./routes/blogRoutes');
+const firstRoutes = require('./routes/firstRoutes');
+
 const methodOverride = require('method-override'); // สำหรับแก้ไขข้อมูล
 const bcrypt = require('bcryptjs');
 const User = require('./models/User'); // นำเข้าจากไฟล์ User.js
@@ -56,6 +58,8 @@ app.get('/about', (req, res) => {
 });
 
 app.use('/blogs', blogRoutes);
+
+app.use('/first', firstRoutes);
 
 // Route - เมนูอาหาร
 app.get('/salad', (req, res) => {
@@ -112,12 +116,13 @@ app.post('/login', async (req, res) => {
         }
 
         req.session.username = user.username; // บันทึกชื่อผู้ใช้ใน session
-        res.redirect('/'); // เปลี่ยนเส้นทางไปยังหน้าหลัก
+        res.redirect('/first'); // เปลี่ยนเส้นทางไปยังหน้าหลัก
     } catch (err) {
         console.error('Login error:', err);
         res.status(500).send('เกิดข้อผิดพลาด');
     }
 });
+
 
 // Route - Dashboard
 app.get('/dashboard', (req, res) => {
