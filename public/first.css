@@ -18,7 +18,7 @@ html,
         padding: 20px;
         background: linear-gradient(
           135deg,
-          #ee0909,
+          #3639d0,
           #000000
         ); /* พื้นหลังไล่สีสดใส */
         border-radius: 15px; /* ขอบมน */
@@ -34,7 +34,7 @@ html,
       .navbar {
         background: linear-gradient(
           135deg,
-          #ee0909,
+          #0946ee,
           #000000
         ); /* พื้นหลังไล่สี */
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* เงาให้ navbar ดูโดดเด่น */
