@@ -39,7 +39,7 @@ app.use(morgan('dev'));
 app.get('/', async (req, res) => {
     try {
         const blogs = await Blog.find(); // ดึงข้อมูลบล็อกจากฐานข้อมูล
-        res.render('blogs/index', { 
+        res.render('login', { 
             username: req.session.username, 
             blogs: blogs, // ส่งตัวแปร blogs ไปที่ View
             mytitle: 'Welcome' // เพิ่ม mytitle ที่นี่
