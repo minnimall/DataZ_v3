@@ -59,6 +59,8 @@ app.get('/about', (req, res) => {
 
 app.use('/blogs', blogRoutes);
 
+app.use('/health', healthRoutes)
+
 app.use('/first', firstRoutes);
 
 // Route - เมนูอาหาร
