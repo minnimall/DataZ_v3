@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BMI Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f5f5f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .bmi-container {
+            width: 400px;
+            padding: 20px;
+            background: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        .bmi-container h1 {
+            margin-bottom: 20px;
+            color: #333;
+        }
+        .bmi-container input[type="number"] {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        .bmi-container button {
+            width: 100%;
+            padding: 10px;
+            margin: 20px 0;
+            background-color: #28a745;
+            border: none;
+            border-radius: 5px;
+            color: #fff;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .bmi-container button:hover {
+            background-color: #218838;
+        }
+        .bmi-result {
+            margin-top: 20px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+        .bmi-status {
+            margin-top: 10px;
+            font-size: 16px;
+            color: #007bff;
+        }
+    </style>
+</head>
+<body>
+    <div class="bmi-container">
+        <h1>BMI Calculator</h1>
+        <input type="number" id="weight" placeholder="Enter your weight in kg" min="1">
+        <input type="number" id="height" placeholder="Enter your height in cm" min="1">
+        <button onclick="calculateBMI()">Calculate BMI</button>
+        <div class="bmi-result" id="bmi-result"></div>
+        <div class="bmi-status" id="bmi-status"></div>
+    </div>
+
+    <script>
+        function calculateBMI() {
+            // รับค่าน้ำหนัก (weight) และความสูง (height) จากผู้ใช้งาน
+            let weight = parseFloat(document.getElementById('weight').value);
+            let height = parseFloat(document.getElementById('height').value) / 100; // แปลงหน่วย cm เป็น m
+
+            // ตรวจสอบค่าที่รับมาว่าไม่ว่างหรือเป็น 0
+            if (weight && height) {
+                // คำนวณค่า BMI (BMI = น้ำหนัก (กก.) / (ความสูง (ม.)^2))
+                let bmi = weight / (height * height);
+                bmi = bmi.toFixed(2); // แสดงทศนิยม 2 ตำแหน่ง
+
+                // แสดงผลค่า BMI ในช่องผลลัพธ์
+                document.getElementById('bmi-result').innerText = `Your BMI: ${bmi}`;
+
+                // แสดงสถานะจากค่า BMI
+                let status = '';
+                if (bmi < 18.5) {
+                    status = 'Underweight (น้ำหนักน้อยกว่ามาตรฐาน)';
+                } else if (bmi >= 18.5 && bmi < 24.9) {
+                    status = 'Normal weight (น้ำหนักปกติ)';
+                } else if (bmi >= 25 && bmi < 29.9) {
+                    status = 'Overweight (น้ำหนักเกินมาตรฐาน)';
+                } else {
+                    status = 'Obese (โรคอ้วน)';
+                }
+                document.getElementById('bmi-status').innerText = status;
+            } else {
+                // กรณีที่กรอกข้อมูลไม่ครบหรือผิดพลาด
+                document.getElementById('bmi-result').innerText = 'Please enter valid weight and height!';
+                document.getElementById('bmi-status').innerText = '';
+            }
+        }
+    </script>
+</body>
+</html>
