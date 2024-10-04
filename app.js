@@ -1,75 +1,72 @@
-//ทำการนำเข้า module "express" เก็บไว้ในตัวแปร express
-const express = require('express')
-const morgan = require('morgan')
-const mongoose = require('mongoose')
-const blogRoutes = require('./routes/blogRoutes')
-const methodOverride = require('method-override'); //สำหรับแก้ไขข้อมูล
+const express = require('express');
+const morgan = require('morgan');
+const mongoose = require('mongoose');
+const blogRoutes = require('./routes/blogRoutes');
+const firstRoutes = require('./routes/firstRoutes');
 
+const methodOverride = require('method-override'); // สำหรับแก้ไขข้อมูล
 const bcrypt = require('bcryptjs');
 const User = require('./models/User'); // นำเข้าจากไฟล์ User.js
+const session = require('express-session');
+const Blog = require('./models/blogs'); // นำเข้าจากโมเดล Blog ของคุณ
 
+const app = express(); // สร้าง app ก่อนใช้
 
-//ทำการเรียก module หรือ function "express" ขึ้นมาทำงานและสร้าง
-const app = express()
+// ตั้งค่า express-session
+app.use(session({
+    secret: 'your_secret_key', // เปลี่ยนเป็นคีย์ที่ปลอดภัย
+    resave: false,
+    saveUninitialized: true,
+    cookie: { secure: false } // ตั้งเป็น true หากใช้ HTTPS
+}));
 
-//Connect to MongoDB Atlas
-const dbURI = 'mongodb+srv://dullapaht:18072546@cluster0.xyho3qt.mongodb.net/NodeJSDB1?retryWrites=true&w=majority&appName=Cluster0'
+// Connect to MongoDB Atlas
+const dbURI = 'mongodb+srv://dullapaht:18072546@cluster0.xyho3qt.mongodb.net/NodeJSDB1?retryWrites=true&w=majority&appName=Cluster0';
 
 mongoose.connect(dbURI)
     .then((result) => app.listen(3000))
-    .catch((err) => console.log(err))
+    .catch((err) => console.log(err));
 
-//Connect to local MongoDB Compass
-//const dbURI = 'mongodb://127.0.0.1:27017/NodeJSDB1'
+// กำหนดให้มีการใช้ 'ejs' ในการสร้าง view engine หรือ template engine
+app.set('view engine', 'ejs');
 
-//กำหนดให้มีการใช้ 'ejs' ในการสร้าง view engine หรือ template engine
-app.set('view engine', 'ejs')
-
-//กรณีต้องการเปลี่ยนชื่อ folder "views" เป็นชื่ออื่นเช่น "myviews"
-//เพื่อใช้เก็บไฟล์ .ejs สามารถทำได้ด้วยคำสั่งข้างล่างนี้
-//app.set('views', 'myviews')
-
-//ทำการรอรับ listen request จาก Browser
-//app.listen(3000)
-
-//เรียกใช้ middleware "static" ของ Express เอง
-app.use(express.static('public'))
-app.use(express.urlencoded( { extended: true})) //ไว้สำหรับช่วยรับข้อมูลที่ user ส่งมาจาก method POST
-app.use(express.static(__dirname+'/node_modules/bootstrap/dist'))
-
+// Middleware
+app.use(express.static('public'));
+app.use(express.urlencoded({ extended: true })); // ไว้สำหรับช่วยรับข้อมูลที่ user ส่งมาจาก method POST
+app.use(express.static(__dirname + '/node_modules/bootstrap/dist'));
 app.use(methodOverride('_method'));
+app.use(morgan('dev'));
 
-//เรียกใช้ middleware "morgan"
-app.use(morgan('dev'))
+// Route - หน้าแรก
+app.get('/', async (req, res) => {
+    try {
+        const blogs = await Blog.find(); // ดึงข้อมูลบล็อกจากฐานข้อมูล
+        res.render('blogs/index', { 
+            username: req.session.username, 
+            blogs: blogs, // ส่งตัวแปร blogs ไปที่ View
+            mytitle: 'Welcome' // เพิ่ม mytitle ที่นี่
+        });
+    } catch (err) {
+        console.error('Error fetching blogs:', err);
+        res.status(500).send('เกิดข้อผิดพลาดในการดึงข้อมูลบล็อก');
+    }
+});
 
-//ทำการรอรับ get request จาก Browser 
-app.get('/', (req,res)=>{
-    res.redirect('/blogs')
-})
-app.get('/h', (req,res)=>{
-    res.render('health',{title:'Health Care'})
-})
-app.get('/about', (req,res)=>{
-    //res.send('<h1>This is about page</h1>')
-    //res.sendFile('./blog/about.html', {root: __dirname})
-    res.render('about', { mytitle: 'About'})
-})
+// Route - เกี่ยวกับ
+app.get('/about', (req, res) => {
+    res.render('about', { mytitle: 'About' });
+});
 
-app.use('/blogs',blogRoutes)
+app.use('/blogs', blogRoutes);
 
-app.use('/health',healthRoutes)
+app.use('/first', firstRoutes);
 
-app.get('/salad', (req, res)=>{
-    res.render('salad', { menutitle: 'Food Menu',website: 'Healthy Food',menu1: 'Fruit Salad'})
-})
+// Route - เมนูอาหาร
+app.get('/salad', (req, res) => {
+    res.render('salad', { menutitle: 'Food Menu', website: 'Healthy Food', menu1: 'Fruit Salad' });
+});
 
-// app.use((req,res) => {
-//     //res.status(404).sendFile('./blog/404.html', {root: __dirname})
-//     res.status(404).render('404', { mytitle: '404'})
-// }) 
-
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Route - สมัครสมาชิก
 app.get('/register', (req, res) => {
     res.render('register', { title: 'Register' });
 });
@@ -99,7 +96,6 @@ app.post('/register', async (req, res) => {
     }
 });
 
-
 // Route - ล็อกอิน
 app.get('/login', (req, res) => {
     res.render('login', { title: 'Login' });
@@ -119,8 +115,8 @@ app.post('/login', async (req, res) => {
             return res.status(400).send('รหัสผ่านไม่ถูกต้อง');
         }
 
-        // หากล็อกอินสำเร็จ สามารถสร้าง session หรือ token ที่นี่
-        res.redirect('/'); // เปลี่ยนเส้นทางไปยังหน้าหลัก
+        req.session.username = user.username; // บันทึกชื่อผู้ใช้ใน session
+        res.redirect('/first'); // เปลี่ยนเส้นทางไปยังหน้าหลัก
     } catch (err) {
         console.error('Login error:', err);
         res.status(500).send('เกิดข้อผิดพลาด');
@@ -135,7 +131,11 @@ app.get('/dashboard', (req, res) => {
 
 // Route - Logout
 app.get('/logout', (req, res) => {
-    res.clearCookie('token');
-    res.redirect('/login');
+    req.session.destroy(); // ทำลาย session
+    res.redirect('/login'); // เปลี่ยนเส้นทางไปยังหน้า login
 });
-/////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+// Route - 404
+app.use((req, res) => {
+    res.status(404).render('404', { mytitle: '404' });
+});

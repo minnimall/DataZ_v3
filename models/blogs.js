@@ -1,9 +1,6 @@
-const mongoose = require('mongoose')
+const mongoose = require('mongoose');
 
-//ประกาศโครงสร้างของ Schema
-//สำหรับ documents ต่างๆที่ต้องการจะสร้างขึ้น
-const Schema = mongoose.Schema
-const blogSchema = new Schema( {
+const blogSchema = new mongoose.Schema({
     title: {
         type: String,
         required: true
@@ -15,12 +12,13 @@ const blogSchema = new Schema( {
     body: {
         type: String,
         required: true
+    },
+    createdAt: {
+        type: Date,
+        default: Date.now
     }
-},{ timestamps: true })
+});
 
-//สร้าง model ที่ห่อหุ้ม blogSchema อยู่ภายใน
-const myBlog = mongoose.model('Blog', blogSchema)
+const Blog = mongoose.model('Blog', blogSchema);
 
-//ทำการ export model เพื่อให้สามารถเรียกใช้ใน program
-//อื่นๆได้ ที่อยู่ใน project นี้
-module.exports = myBlog
+module.exports = Blog;

@@ -1,15 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
-    <%- include('../partials/head.ejs') %>
+<%- include('../partials/head.ejs') %>
 <body>
-    <% const name= 'Season Greeting' %>
-    
     <%- include('../partials/nav.ejs') %>
 
     <div class="blogs content">
         <img src="/natural.jpeg" width="350" height="150" alt="natural">
         <h2>All Blogs</h2>
-        <% if (blogs.length>0) {  %>
+
+        <!-- แสดงชื่อผู้ใช้งานที่ล็อกอิน -->
+        <% if (username) { %>
+            <p>Welcome, <%= username %>!</p>
+        <% } %>
+
+        <% if (blogs.length > 0) { %>
             <% blogs.forEach(ablog => { %>
                 <a class="single" href="/blogs/<%= ablog._id %>">
                 <h3 class="title"><%= ablog.title %></h3>
