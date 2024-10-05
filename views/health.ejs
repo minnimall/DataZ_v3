@@ -18,18 +18,18 @@
     <%- include('./partials/nav.ejs') %>
     <%- include('partials/breadcrumb') %>
     
+    
     <div class="container">
-      <p>เรียนรู้เกี่ยวกับการดูแลสุขภาพและการใช้ชีวิตอย่างมีสุขภาพดี</p>
-      <% health.forEach(article => { %>
-      <div class="article">
-        <a href="/health/<%= article._id %>">
-          <h2><%= article.Health_Title %></h2>
-          <h3><%= article.Sub_Title %></h3>
-          <p><%= article.Health_Detial.substring(0, 100) + '...' %></p>
-          <!-- แสดงรายละเอียดบางส่วน -->
-        </a>
-      </div>
-      <% }) %>
+        <p>เรียนรู้เกี่ยวกับการดูแลสุขภาพและการใช้ชีวิตอย่างมีสุขภาพดี</p>
+        <% health.forEach(article => { %>
+        <div class="article">
+            <a href="/health/find/<%= article._id %>">
+                <h2><%= article.Health_Title %></h2>
+                <h3><%= article.Sub_Title %></h3>
+                <p><%= article.Health_Detial.substring(0, 100) + '...' %></p> <!-- แสดงรายละเอียดบางส่วน -->
+            </a>
+        </div>
+        <% }) %>
     </div>
   </body>
 </html>
