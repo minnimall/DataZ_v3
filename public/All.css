@@ -30,7 +30,7 @@ h1 {
 .navbar {
   background: linear-gradient(135deg, #ee0909, #000000); /* พื้นหลังไล่สี */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* เงาให้ navbar ดูโดดเด่น */
-  border-radius: 8px; /* ขอบมน */
+  /* border-radius: 8px; ขอบมน */
 }
 
 .navbar-brand {
