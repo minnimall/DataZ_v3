@@ -134,108 +134,80 @@
             color: #007bff;
         }
     </style>
-</head>
 
 <body>
-    <%- include('./partials/head.ejs') %>
-    <%- include('./partials/nav.ejs') %>
-    <%- include('partials/breadcrumb') %>
+    <%- include('./partials/head.ejs') %> <%- include('./partials/nav.ejs') %>
+            <%- include('partials/breadcrumb') %>
+
 
     <div class="container">
-        <!-- <div class="box">
-            <div>
-                <h2>โปรไฟล์ของผู้ใช้</h2>
-                <% if (user) { %>
-                <p><strong>ชื่อ:</strong> <%= user.username %></p>
-                <!-- เพิ่มการแสดงผล BMI และสถานะของ BMI -->
-                <p>
-                    BMI: 
-                    <span id="user-bmi"><%= user.bmi ? user.bmi : 'ไม่พบข้อมูล BMI' %></span> 
-                    <!-- กำหนดให้สถานะ BMI แสดงในบรรทัดเดียวกัน -->
-                    <span id="bmi-status-profile">
-                        <% if (user.bmi) { %>
-                            <% if (user.bmi < 18.5) { %>
-                                ผอม (น้ำหนักน้อยกว่ามาตรฐาน)
-                            <% } else if (user.bmi >= 18.5 && user.bmi < 24.9) { %>
-                                ปกติ (น้ำหนักปกติ)
-                            <% } else if (user.bmi >= 25 && user.bmi < 29.9) { %>
-                                อ้วน (น้ำหนักเกินมาตรฐาน)
-                            <% } else { %>
-                                โรคอ้วน (น้ำหนักมากกว่ามาตรฐาน)
-                            <% } %>
-                        <% } else { %>
-                            ไม่พบข้อมูลสถานะ BMI
-                        <% } %>
-                    </span>
-                </p>
-                <% } else { %>
-                <p>ไม่พบข้อมูลผู้ใช้</p>
-                <% } %>
-            </div>
-            <div>
-                
-            </div>
-        </div> -->
         <div class="box">
-            <div>
-                <h2>โปรไฟล์ของผู้ใช้</h2>
-                <% if (user) { %>
-                <p><strong>ชื่อ:</strong> <%= user.username %></p>
-                <!-- เพิ่มการแสดงผล BMI และสถานะของ BMI -->
-                <p>
-                    BMI: 
-                    <span id="user-bmi"><%= user.bmi ? user.bmi : 'ไม่พบข้อมูล BMI' %></span> 
-                    <!-- กำหนดให้สถานะ BMI แสดงในบรรทัดเดียวกัน -->
-                    <span id="bmi-status-profile">
-                        <% if (user.bmi) { %>
-                            <% if (user.bmi < 18.5) { %>
-                                ผอม (น้ำหนักน้อยกว่ามาตรฐาน)
-                            <% } else if (user.bmi >= 18.5 && user.bmi < 24.9) { %>
-                                ปกติ (น้ำหนักปกติ)
-                            <% } else if (user.bmi >= 25 && user.bmi < 29.9) { %>
-                                อ้วน (น้ำหนักเกินมาตรฐาน)
+
+                            <h2>โปรไฟล์ของผู้ใช้</h2>
+                            <% if (user) { %>
+                            <p><strong>ชื่อ:</strong> <%= user.username %></p>
+                            <!-- เพิ่มการแสดงผล BMI และสถานะของ BMI -->
+                            <p>
+                                BMI: 
+                                <span id="user-bmi"><%= user.bmi ? user.bmi : 'ไม่พบข้อมูล BMI' %></span> 
+                                <!-- กำหนดให้สถานะ BMI แสดงในบรรทัดเดียวกัน -->
+                                <span id="bmi-status-profile">
+                                    <% if (user.bmi) { %>
+                                        <% if (user.bmi < 18.5) { %>
+                                            ผอม (น้ำหนักน้อยกว่ามาตรฐาน)
+                                        <% } else if (user.bmi >= 18.5 && user.bmi < 24.9) { %>
+                                            ปกติ (น้ำหนักปกติ)
+                                        <% } else if (user.bmi >= 25 && user.bmi < 29.9) { %>
+                                            อ้วน (น้ำหนักเกินมาตรฐาน)
+                                        <% } else { %>
+                                            โรคอ้วน (น้ำหนักมากกว่ามาตรฐาน)
+                                        <% } %>
+                                    <% } else { %>
+                                        ไม่พบข้อมูลสถานะ BMI
+                                    <% } %>
+                                </span>
+                            </p>
                             <% } else { %>
-                                โรคอ้วน (น้ำหนักมากกว่ามาตรฐาน)
+                            <p>ไม่พบข้อมูลผู้ใช้</p>
                             <% } %>
-                        <% } else { %>
-                            ไม่พบข้อมูลสถานะ BMI
-                        <% } %>
-                    </span>
-                </p>
-                <% } else { %>
-                <p>ไม่พบข้อมูลผู้ใช้</p>
-                <% } %>
-            </div>
+                        </div>
+
+      <div class="box mt-4">
+        <h2 class="text-center">ตารางการออกกำลังกาย</h2>
+        <div id="calendarControls" class="d-flex justify-content-center mb-3">
+          <select id="monthSelect" class="form-select w-auto me-2" onchange="updateCalendar()"></select>
+          <select id="yearSelect" class="form-select w-auto" onchange="updateCalendar()"></select>
         </div>
+        <div id="calendar"></div>
+      </div>
 
-        <div class="box mt-4">
-            <h2 class="text-center">ตารางการออกกำลังกาย</h2>
+      <div class="box">
+        <h2>BMI</h2>
+        <div class="bmi-container">
+            <h1>BMI Calculator</h1>
+            <input type="number" id="weight" placeholder="Enter your weight in kg" min="1">
+            <input type="number" id="height" placeholder="Enter your height in cm" min="1">
+            <button onclick="calculateBMI()">Calculate BMI</button>
+            <div class="bmi-result" id="bmi-result"></div>
+            <div class="bmi-status" id="bmi-status"></div>
 
-            <div id="calendarContainer">
-                <!-- Calendar arrows for previous and next month -->
-                <span class="calendar-arrow prev-arrow" onclick="prevMonth()">&#10094;</span>
-                <span class="calendar-arrow next-arrow" onclick="nextMonth()">&#10095;</span>
 
-                <!-- Calendar controls with dropdowns -->
-                <div id="calendarControls" class="d-flex justify-content-center mb-3">
-                    <select id="monthSelect" class="form-select w-auto me-2" onchange="updateCalendar()"></select>
-                    <select id="yearSelect" class="form-select w-auto" onchange="updateCalendar()"></select>
-                </div>
-                <div id="calendar"></div>
-            </div>
+
+
         </div>
+      </div>
 
-        <div class="box">
-            <h2>BMI</h2>
-            <div class="bmi-container">
-                <h1>BMI Calculator</h1>
-                <input type="number" id="weight" placeholder="Enter your weight in kg" min="1">
-                <input type="number" id="height" placeholder="Enter your height in cm" min="1">
-                <button onclick="calculateBMI()">Calculate BMI</button>
-                <div class="bmi-result" id="bmi-result"></div>
-                <div class="bmi-status" id="bmi-status"></div>
-            </div>
-        </div>
+      <div class="box">
+        <h2>History</h2>
+      </div>
+
+
+
+
+
+
+
+
     </div>
 </body>
 
@@ -243,33 +215,55 @@
 
 <script>
     function calculateBMI() {
-        let weight = parseFloat(document.getElementById('weight').value);
-        let height = parseFloat(document.getElementById('height').value) / 100; // แปลงหน่วย cm เป็น m
+        let weight = parseFloat(document.getElementById("weight").value);
+        let height = parseFloat(document.getElementById("height").value) / 100; // แปลงหน่วย cm เป็น m
 
         if (weight && height) {
             let bmi = weight / (height * height);
             bmi = bmi.toFixed(2); // แสดงทศนิยม 2 ตำแหน่ง
 
-            document.getElementById('bmi-result').innerText = Your BMI: ${bmi};
+            document.getElementById("bmi-result").innerText = `Your BMI: ${bmi}`;
 
-            let status = '';
+            let status = "";
             if (bmi < 18.5) {
-                status = 'Underweight (น้ำหนักน้อยกว่ามาตรฐาน)';
+                status = "Underweight (น้ำหนักน้อยกว่ามาตรฐาน)";
             } else if (bmi >= 18.5 && bmi < 24.9) {
-                status = 'Normal weight (น้ำหนักปกติ)';
+                status = "Normal weight (น้ำหนักปกติ)";
             } else if (bmi >= 25 && bmi < 29.9) {
-                status = 'Overweight (น้ำหนักเกินมาตรฐาน)';
+                status = "Overweight (น้ำหนักเกินมาตรฐาน)";
             } else {
-                status = 'Obese (โรคอ้วน)';
+                status = "Obese (โรคอ้วน)";
             }
-            document.getElementById('bmi-status').innerText = status;
+            document.getElementById("bmi-status").innerText = status;
 
-            // แสดง BMI ในโปรไฟล์ผู้ใช้
-            document.getElementById('user-bmi').innerText = bmi;
-
+            // ส่งข้อมูล BMI ไปยังเซิร์ฟเวอร์เพื่อบันทึก
+            fetch("/save-bmi", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    userId: "<%= user._id %>", // ใช้ userId ที่แท้จริงจากข้อมูลผู้ใช้
+                    bmi: bmi,
+                }),
+            })
+                .then((response) => response.json())
+                .then((data) => {
+                    if (data.success) {
+                        console.log("BMI saved successfully");
+                        // อัปเดตค่า BMI ที่แสดงในหน้าโปรไฟล์
+                        document.getElementById("user-bmi").innerText = bmi;
+                    } else {
+                        console.error("Error saving BMI:", data.message);
+                    }
+                })
+                .catch((error) => {
+                    console.error("Error:", error);
+                });
         } else {
-            document.getElementById('bmi-result').innerText = 'Please enter valid weight and height!';
-            document.getElementById('bmi-status').innerText = '';
+            document.getElementById("bmi-result").innerText =
+                "Please enter valid weight and height!";
+            document.getElementById("bmi-status").innerText = "";
         }
     }
 
@@ -282,16 +276,33 @@
         calendar.innerHTML = ""; // Clear previous calendar
 
         const monthNames = [
-            "มกราคม", "กุมภาพันธ์", "มีนาคม", "เมษายน", "พฤษภาคม",
-            "มิถุนายน", "กรกฎาคม", "สิงหาคม", "กันยายน", "ตุลาคม",
-            "พฤศจิกายน", "ธันวาคม"
+            "มกราคม",
+            "กุมภาพันธ์",
+            "มีนาคม",
+            "เมษายน",
+            "พฤษภาคม",
+            "มิถุนายน",
+            "กรกฎาคม",
+            "สิงหาคม",
+            "กันยายน",
+            "ตุลาคม",
+            "พฤศจิกายน",
+            "ธันวาคม",
         ];
 
         const table = document.createElement("table");
         table.classList.add("table", "table-bordered");
 
         const headerRow = document.createElement("tr");
-        const days = ["อาทิตย์", "จันทร์", "อังคาร", "พุธ", "พฤหัสบดี", "ศุกร์", "เสาร์"];
+        const days = [
+            "อาทิตย์",
+            "จันทร์",
+            "อังคาร",
+            "พุธ",
+            "พฤหัสบดี",
+            "ศุกร์",
+            "เสาร์",
+        ];
         days.forEach((day) => {
             const th = document.createElement("th");
             th.textContent = day;
@@ -318,7 +329,11 @@
                     cell.textContent = currentDay;
 
                     const today = new Date();
-                    if (currentDay === today.getDate() && month === today.getMonth() && year === today.getFullYear()) {
+                    if (
+                        currentDay === today.getDate() &&
+                        month === today.getMonth() &&
+                        year === today.getFullYear()
+                    ) {
                         cell.classList.add("current-day");
                     }
 
