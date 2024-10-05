@@ -5,6 +5,7 @@ const blogRoutes = require('./routes/blogRoutes');
 const firstRoutes = require('./routes/firstRoutes');
 const profileRoutes = require('./routes/profileRoutes');
 const healthRoutes = require('./routes/healthRoutes');
+const exerciseRoutes = require('./routes/exerciseRoutes');
 
 const methodOverride = require('method-override'); // สำหรับแก้ไขข้อมูล
 const bcrypt = require('bcryptjs');
@@ -81,6 +82,8 @@ app.use('/first', checkAuth, firstRoutes);
 app.use('/profile', checkAuth, profileRoutes);
 app.use('/blogs', checkAuth, blogRoutes); // ป้องกันการเข้าถึงเส้นทางบล็อก
 app.use('/health', checkAuth, healthRoutes); // ป้องกันการเข้าถึงเส้นทางสุขภาพ
+app.use('/exercise', checkAuth, exerciseRoutes); 
+
 
 // Route - เกี่ยวกับ
 app.get('/about', redirectToLoginIfNotAuth, (req, res) => {
