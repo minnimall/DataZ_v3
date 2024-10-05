@@ -5,6 +5,7 @@ const blogRoutes = require('./routes/blogRoutes');
 const firstRoutes = require('./routes/firstRoutes');
 const profileRoutes = require('./routes/profileRoutes');
 const healthRoutes = require('./routes/healthRoutes');
+const exerciseRoutes = require('./routes/exerciseRoutes');
 const methodOverride = require('method-override');
 const bcrypt = require('bcryptjs');
 const User = require('./models/User');
@@ -87,6 +88,7 @@ app.use('/home', checkAuth, firstRoutes);
 app.use('/profile', checkAuth, profileRoutes);
 app.use('/blogs', checkAuth, blogRoutes);
 app.use('/health', checkAuth, healthRoutes);
+app.use('/exercise', checkAuth, exerciseRoutes);
 
 // Route - เกี่ยวกับ
 app.get('/about', (req, res) => {
