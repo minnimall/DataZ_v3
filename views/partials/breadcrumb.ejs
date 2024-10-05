@@ -1,26 +1,18 @@
-<style>
-  .breadcrumb {
-    background-color: #f8f9fa;
-    padding: 10px;
-    border-radius: 5px;
-  }
-
-  .breadcrumb-item + .breadcrumb-item::before {
-    content: ">";
-    padding: 0 5px;
-  }
-</style>
 <nav aria-label="breadcrumb">
   <ol class="breadcrumb">
-    <% breadcrumbs.forEach((crumb, index) => { %> <% if (index ===
-    breadcrumbs.length - 1) { %>
-    <li class="breadcrumb-item active" aria-current="page">
-      <%= crumb.name %>
-    </li>
-    <% } else { %>
     <li class="breadcrumb-item">
-      <a href="<%= crumb.url %>"><%= crumb.name %></a>
+      <a href="/"><strong>กระทืบพุง</strong></a> <!-- เปลี่ยนที่นี่ -->
     </li>
-    <% } %> <% }); %>
+    <% breadcrumbs.forEach((crumb, index) => { %> 
+      <% if (index === breadcrumbs.length - 1) { %>
+        <li class="breadcrumb-item active" aria-current="page">
+          <%= crumb.name %>
+        </li>
+      <% } else { %>
+        <li class="breadcrumb-item">
+          <a href="<%= crumb.url %>"><%= crumb.name %></a>
+        </li>
+      <% } %> 
+    <% }); %>
   </ol>
 </nav>
