@@ -61,9 +61,10 @@ const checkAuth = (req, res, next) => {
     if (req.session.username) {
         next();
     } else {
-        res.redirect('/login');
+        res.redirect('/login'); // ถ้า session ไม่มี
     }
 };
+
 
 // Middleware ส่ง breadcrumb ไปทุก view
 app.use((req, res, next) => {
@@ -80,7 +81,12 @@ app.use((req, res, next) => {
 
 // Route - หน้าแรก
 app.get('/', (req, res) => {
-    res.redirect('/login');
+    // ถ้า session มีค่า username
+    if (req.session.username) {
+        res.render('first', { title: 'Home' }); // เปลี่ยนไปที่หน้า home แทน login
+    } else {
+        res.redirect('/login'); // หากไม่มี session ให้ไปหน้า login
+    }
 });
 
 // ใช้ middleware ใน routes ที่ต้องการ
