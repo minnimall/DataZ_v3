@@ -138,7 +138,7 @@
 </head>
 
 <body>
-    <%- include('./partials/head.ejs') %>
+    <%- include('./partials/head.ejs') %> 
     <%- include('./partials/nav.ejs') %>
     <%- include('partials/breadcrumb') %>
 
@@ -152,6 +152,9 @@
                 <% } else { %>
                 <p>ไม่พบข้อมูลผู้ใช้</p>
                 <% } %>
+            </div>
+            <div>
+                
             </div>
         </div>
 
@@ -190,14 +193,13 @@
 
 <script>
     function calculateBMI() {
-        let weight = parseFloat(document.getElementById('weight').value);
-        let height = parseFloat(document.getElementById('height').value) / 100; // แปลงหน่วย cm เป็น m
-
+      let weight = parseFloat(document.getElementById("weight").value);
+      let height = parseFloat(document.getElementById("height").value) / 100; // แปลงหน่วย cm เป็น m
         if (weight && height) {
             let bmi = weight / (height * height);
             bmi = bmi.toFixed(2); // แสดงทศนิยม 2 ตำแหน่ง
 
-            document.getElementById('bmi-result').innerText = `Your BMI: ${bmi}`;
+            document.getElementById('bmi-result').innerText = Your BMI: ${bmi};
 
             let status = '';
             if (bmi < 18.5) {
@@ -215,8 +217,9 @@
             document.getElementById('user-bmi').innerText = bmi;
 
         } else {
-            document.getElementById('bmi-result').innerText = 'Please enter valid weight and height!';
-            document.getElementById('bmi-status').innerText = '';
+          document.getElementById("bmi-result").innerText =
+                "Please enter valid weight and height!";
+            document.getElementById("bmi-status").innerText = "";
         }
     }
 
