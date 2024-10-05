@@ -23,14 +23,13 @@
     <div class="container">
         <p>เรียนรู้เกี่ยวกับการดูแลสุขภาพและการใช้ชีวิตอย่างมีสุขภาพดี</p>
         <% health.forEach(article => { %>
-        <div class="article">
-            <form action="/health/<%= article._id %>" method="POST">
-                <button type="submit" style="background: none; border: none; padding: 0; cursor: pointer; text-align: left;">
-                    <h2><%= article.Health_Title %></h2>
-                    <h3><%= article.Sub_Title %></h3>
-                    <p><%- article.Health_Detial.substring(0, 100) + '...' %></p> <!-- แสดงรายละเอียดบางส่วน -->
-                </button>
+        <div class="article" onclick="document.getElementById('form-<%= article._id %>').submit();" style="cursor: pointer;">
+            <form id="form-<%= article._id %>" action="/health/<%= article._id %>" method="POST" style="display: none;">
+                <input type="hidden" name="_method" value="POST">
             </form>
+            <h2><%= article.Health_Title %></h2>
+            <h3><%= article.Sub_Title %></h3>
+            <p><%- article.Health_Detial.substring(0, 100) + '...' %></p> <!-- แสดงรายละเอียดบางส่วน -->
         </div>
         <% }) %>
     </div>
