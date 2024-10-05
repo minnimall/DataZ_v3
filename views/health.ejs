@@ -26,7 +26,7 @@
             <a href="/health/find/<%= article._id %>">
                 <h2><%= article.Health_Title %></h2>
                 <h3><%= article.Sub_Title %></h3>
-                <p><%= article.Health_Detial.substring(0, 100) + '...' %></p> <!-- แสดงรายละเอียดบางส่วน -->
+                <p><%- article.Health_Detial.substring(0, 100) + '...' %></p> <!-- แสดงรายละเอียดบางส่วน -->
             </a>
         </div>
         <% }) %>
