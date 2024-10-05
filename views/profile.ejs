@@ -80,8 +80,9 @@
         .form-select {
             max-width: 150px;
         }
-         /* BMI UI Styles */
-         .bmi-container {
+
+        /* BMI UI Styles */
+        .bmi-container {
             max-width: 400px;
             margin: 50px auto;
             padding: 20px;
@@ -94,7 +95,7 @@
         .bmi-container h1 {
             margin-bottom: 20px;
             font-size: 24px;
-            color: #ffffff;
+            color: #000000;
         }
 
         .bmi-container input {
@@ -136,41 +137,25 @@
     </style>
 
 <body>
-    <%- include('./partials/head.ejs') %> <%- include('./partials/nav.ejs') %>
-            <%- include('partials/breadcrumb') %>
-
+    <%- include('./partials/head.ejs') %> 
+    <%- include('./partials/nav.ejs') %>
+    <%- include('partials/breadcrumb') %>
 
     <div class="container">
         <div class="box">
-
-                            <h2>โปรไฟล์ของผู้ใช้</h2>
-                            <% if (user) { %>
-                            <p><strong>ชื่อ:</strong> <%= user.username %></p>
-                            <!-- เพิ่มการแสดงผล BMI และสถานะของ BMI -->
-                            <p>
-                                BMI: 
-                                <span id="user-bmi"><%= user.bmi ? user.bmi : 'ไม่พบข้อมูล BMI' %></span> 
-                                <!-- กำหนดให้สถานะ BMI แสดงในบรรทัดเดียวกัน -->
-                                <span id="bmi-status-profile">
-                                    <% if (user.bmi) { %>
-                                        <% if (user.bmi < 18.5) { %>
-                                            ผอม (น้ำหนักน้อยกว่ามาตรฐาน)
-                                        <% } else if (user.bmi >= 18.5 && user.bmi < 24.9) { %>
-                                            ปกติ (น้ำหนักปกติ)
-                                        <% } else if (user.bmi >= 25 && user.bmi < 29.9) { %>
-                                            อ้วน (น้ำหนักเกินมาตรฐาน)
-                                        <% } else { %>
-                                            โรคอ้วน (น้ำหนักมากกว่ามาตรฐาน)
-                                        <% } %>
-                                    <% } else { %>
-                                        ไม่พบข้อมูลสถานะ BMI
-                                    <% } %>
-                                </span>
-                            </p>
-                            <% } else { %>
-                            <p>ไม่พบข้อมูลผู้ใช้</p>
-                            <% } %>
-                        </div>
+            <div>
+                <h2>โปรไฟล์ของผู้ใช้</h2>
+                <% if (user) { %>
+                <p><strong>ชื่อ:</strong> <%= user.username %></p>
+                <p>BMI: <span id="user-bmi"><%= user.bmi ? user.bmi : 'ไม่พบข้อมูล BMI' %></span></p>
+                <% } else { %>
+                <p>ไม่พบข้อมูลผู้ใช้</p>
+                <% } %>
+            </div>
+            <div>
+                
+            </div>
+        </div>
 
       <div class="box mt-4">
         <h2 class="text-center">ตารางการออกกำลังกาย</h2>
@@ -215,9 +200,8 @@
 
 <script>
     function calculateBMI() {
-        let weight = parseFloat(document.getElementById("weight").value);
-        let height = parseFloat(document.getElementById("height").value) / 100; // แปลงหน่วย cm เป็น m
-
+      let weight = parseFloat(document.getElementById("weight").value);
+      let height = parseFloat(document.getElementById("height").value) / 100; // แปลงหน่วย cm เป็น m
         if (weight && height) {
             let bmi = weight / (height * height);
             bmi = bmi.toFixed(2); // แสดงทศนิยม 2 ตำแหน่ง
@@ -261,7 +245,7 @@
                     console.error("Error:", error);
                 });
         } else {
-            document.getElementById("bmi-result").innerText =
+          document.getElementById("bmi-result").innerText =
                 "Please enter valid weight and height!";
             document.getElementById("bmi-status").innerText = "";
         }
