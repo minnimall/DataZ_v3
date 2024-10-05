@@ -3,7 +3,8 @@ const healthController = require('../controllers/healthController')
 const router = express.Router()
 
 router.get('/', healthController.health_title)
-router.post('/insert', healthController.health_creat)
-router.get('/:id',healthController.getHealthDetail)
+router.get('/insert', healthController.health_creat)
+router.get('/find/:id',healthController.getHealthDetail)
+router.get('/reset',healthController.resetHealthData)
 
 module.exports = router

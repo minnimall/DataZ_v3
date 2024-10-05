@@ -1,5 +1,8 @@
+@import url('https://fonts.googleapis.com/css2?family=Prompt:wght@500&display=swap');
+*{
+    font-family: 'Prompt', sans-serif;
+  }
 body {
-    font-family: Arial, sans-serif;
     background-color: #f0f4f8;
     margin: 0;
     color: #333;
@@ -11,7 +14,7 @@ header {
 }
 
 h1 {
-    font-family: "Kanit", sans-serif; /* เปลี่ยนฟอนต์เป็น Kanit จาก Google Fonts */
+    /* font-family: "Kanit", sans-serif; เปลี่ยนฟอนต์เป็น Kanit จาก Google Fonts */
     font-size: 4em; /* ขนาดตัวอักษรใหญ่ */
     color: #f2f2f2; /* สีเขียวสดใส */
     text-align: center; /* จัดให้อยู่ตรงกลาง */

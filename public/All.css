@@ -1,3 +1,7 @@
+@import url('https://fonts.googleapis.com/css2?family=Prompt:wght@500&display=swap');
+*{
+  font-family: 'Prompt', sans-serif;
+}
 html,
 body {
   margin: 0;
@@ -9,7 +13,7 @@ body {
   background-color: rgb(240, 239, 239);
 }
 h1 {
-  font-family: "Kanit", sans-serif; /* เปลี่ยนฟอนต์เป็น Kanit จาก Google Fonts */
+  /* font-family: "Kanit", sans-serif; เปลี่ยนฟอนต์เป็น Kanit จาก Google Fonts */
   font-size: 4em; /* ขนาดตัวอักษรใหญ่ */
   color: #f2f2f2; /* สีเขียวสดใส */
   text-align: center; /* จัดให้อยู่ตรงกลาง */
@@ -30,7 +34,7 @@ h1 {
 .navbar {
   background: linear-gradient(135deg, #ee0909, #000000); /* พื้นหลังไล่สี */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* เงาให้ navbar ดูโดดเด่น */
-  border-radius: 8px; /* ขอบมน */
+  /* border-radius: 8px; ขอบมน */
 }
 
 .navbar-brand {
