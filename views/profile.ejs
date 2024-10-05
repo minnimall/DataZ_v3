@@ -174,36 +174,35 @@
             <p>ไม่พบข้อมูลผู้ใช้</p>
             <% } %>
         </div>
-    </div>
 
-    <div class="box mt-4">
-        <h2 class="text-center">ตารางการออกกำลังกาย</h2>
+        <div class="box mt-4">
+            <h2 class="text-center">ตารางการออกกำลังกาย</h2>
 
-        <div id="calendarContainer">
-            <!-- เพิ่มปุ่มเลื่อนซ้ายและขวา -->
-            <span class="calendar-arrow prev-arrow" onclick="prevMonth()">&#10094;</span>
-            <span class="calendar-arrow next-arrow" onclick="nextMonth()">&#10095;</span>
+            <div id="calendarContainer">
+                <!-- เพิ่มปุ่มเลื่อนซ้ายและขวา -->
+                <span class="calendar-arrow prev-arrow" onclick="prevMonth()">&#10094;</span>
+                <span class="calendar-arrow next-arrow" onclick="nextMonth()">&#10095;</span>
 
-            <!-- Calendar controls with dropdowns -->
-            <div id="calendarControls" class="d-flex justify-content-center mb-3">
-                <select id="monthSelect" class="form-select w-auto me-2" onchange="updateCalendar()"></select>
-                <select id="yearSelect" class="form-select w-auto" onchange="updateCalendar()"></select>
+                <!-- Calendar controls with dropdowns -->
+                <div id="calendarControls" class="d-flex justify-content-center mb-3">
+                    <select id="monthSelect" class="form-select w-auto me-2" onchange="updateCalendar()"></select>
+                    <select id="yearSelect" class="form-select w-auto" onchange="updateCalendar()"></select>
+                </div>
+                <div id="calendar"></div>
             </div>
-            <div id="calendar"></div>
         </div>
-    </div>
 
-    <div class="box">
-        <h2>BMI</h2>
-        <div class="bmi-container">
-            <h1>BMI Calculator</h1>
-            <input type="number" id="weight" placeholder="Enter your weight in kg" min="1">
-            <input type="number" id="height" placeholder="Enter your height in cm" min="1">
-            <button onclick="calculateBMI()">Calculate BMI</button>
-            <div class="bmi-result" id="bmi-result"></div>
-            <div class="bmi-status" id="bmi-status"></div>
+        <div class="box">
+            <h2>BMI</h2>
+            <div class="bmi-container">
+                <h1>BMI Calculator</h1>
+                <input type="number" id="weight" placeholder="Enter your weight in kg" min="1">
+                <input type="number" id="height" placeholder="Enter your height in cm" min="1">
+                <button onclick="calculateBMI()">Calculate BMI</button>
+                <div class="bmi-result" id="bmi-result"></div>
+                <div class="bmi-status" id="bmi-status"></div>
+            </div>
         </div>
-    </div>
 
     <div class="box">
         <h2>History</h2>
