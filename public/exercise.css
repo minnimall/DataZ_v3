@@ -17,6 +17,9 @@
   .filter-box i{
     color: #ff4500;
   }
+  .filter-box i.dimmed{
+    opacity: 0.4;
+  }
 
   .icon-container i {
     color: #ff4500;

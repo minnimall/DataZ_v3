@@ -90,13 +90,18 @@
 
     <div class="container">
         <div class="box">
-            <h2>โปรไฟล์ของผู้ใช้</h2>
-            <% if (user) { %>
-            <p><strong>ชื่อ:</strong> <%= user.username %></p>
-            <p>BMI: <span id="user-bmi"><%= user.bmi ? user.bmi : 'ไม่พบข้อมูล BMI' %></span></p>
-            <% } else { %>
-            <p>ไม่พบข้อมูลผู้ใช้</p>
-            <% } %>
+            <div>
+                <h2>โปรไฟล์ของผู้ใช้</h2>
+                <% if (user) { %>
+                <p><strong>ชื่อ:</strong> <%= user.username %></p>
+                <p>BMI: <span id="user-bmi"><%= user.bmi ? user.bmi : 'ไม่พบข้อมูล BMI' %></span></p>
+                <% } else { %>
+                <p>ไม่พบข้อมูลผู้ใช้</p>
+                <% } %>
+            </div>
+            <div>
+                
+            </div>
         </div>
 
         <div class="box mt-4">
