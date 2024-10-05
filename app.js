@@ -57,13 +57,27 @@ const redirectToLoginIfNotAuth = (req, res, next) => {
     }
 };
 
-// Route - หน้าแรก (เปลี่ยนเส้นทางไปที่ login เสมอ)
-app.get('/', redirectToLoginIfNotAuth, (req, res) => {
-    res.redirect('/login');
+// Middleware ส่ง breadcrumb ไปทุก view
+app.use((req, res, next) => {
+    const pathArray = req.path.split('/').filter((p) => p); // แปลง path เป็น array
+    const breadcrumbs = pathArray.map((p, index) => {
+        return {
+            name: p.charAt(0).toUpperCase() + p.slice(1), // เปลี่ยนชื่อเป็นตัวใหญ่ตัวแรก
+            url: '/' + pathArray.slice(0, index + 1).join('/')
+        };
+    });
+    res.locals.breadcrumbs = [{ name: 'กระทืบ"พุง"', url: '/' }, ...breadcrumbs];
+    next();
 });
 
+// Route - หน้าแรก (เปลี่ยนเส้นทางไปที่ login เสมอ)
+app.get('/', redirectToLoginIfNotAuth, (req, res) => {
+    res.redirect('/home'); // เปลี่ยนเส้นทางไปที่หน้าแรกจริงๆ ของคุณแทนการไปที่ login
+});
+
+
 // ใช้ middleware ใน routes ที่ต้องการ
-app.use('/first', checkAuth, firstRoutes);
+app.use('/home', checkAuth, firstRoutes);
 app.use('/profile', checkAuth, profileRoutes);
 app.use('/blogs', checkAuth, blogRoutes); // ป้องกันการเข้าถึงเส้นทางบล็อก
 app.use('/health', checkAuth, healthRoutes); // ป้องกันการเข้าถึงเส้นทางสุขภาพ
@@ -128,7 +142,7 @@ app.post('/login', async (req, res) => {
         }
 
         req.session.username = user.username; // บันทึกชื่อผู้ใช้ใน session
-        res.redirect('/first'); // เปลี่ยนเส้นทางไปยังหน้าหลัก
+        res.redirect('/home'); // เปลี่ยนเส้นทางไปยังหน้าหลัก
     } catch (err) {
         console.error('Login error:', err);
         res.status(500).send('เกิดข้อผิดพลาด');
