@@ -24,11 +24,13 @@
         <p>เรียนรู้เกี่ยวกับการดูแลสุขภาพและการใช้ชีวิตอย่างมีสุขภาพดี</p>
         <% health.forEach(article => { %>
         <div class="article">
-            <a href="/health/find/<%= article._id %>">
-                <h2><%= article.Health_Title %></h2>
-                <h3><%= article.Sub_Title %></h3>
-                <p><%- article.Health_Detial.substring(0, 100) + '...' %></p> <!-- แสดงรายละเอียดบางส่วน -->
-            </a>
+            <form action="/health/<%= article._id %>" method="POST">
+                <button type="submit" style="background: none; border: none; padding: 0; cursor: pointer; text-align: left;">
+                    <h2><%= article.Health_Title %></h2>
+                    <h3><%= article.Sub_Title %></h3>
+                    <p><%- article.Health_Detial.substring(0, 100) + '...' %></p> <!-- แสดงรายละเอียดบางส่วน -->
+                </button>
+            </form>
         </div>
         <% }) %>
     </div>
