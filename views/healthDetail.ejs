@@ -10,25 +10,20 @@
     rel="stylesheet"
     integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
     crossorigin="anonymous"
-    />
-    
+  />
   </head>
   <body>
     <%- include('./partials/head.ejs') %>
-    <%- include('./partials/nav.ejs') %> 
+    <%- include('./partials/nav.ejs') %>
     <%- include('partials/breadcrumb') %>
 
     <div class="container article">
-      <h1><%= article.Health_Title %></h1><br><br>
+    <h1><%= article.Health_Title %></h1><br><br>
       <h3><%= article.Sub_Title %></h3>
       <p><%- article.Health_Detial %></p>
-      
+
       <a class="d-block text-end" href="/health">กลับไปยังหน้าบทความทั้งหมด</a>
     </div>
-    
 
-    <!-- <footer>
-      <a href="/health">กลับไปยังหน้าบทความทั้งหมด</a>
-    </footer> -->
   </body>
 </html>
