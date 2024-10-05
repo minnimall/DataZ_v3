@@ -14,7 +14,9 @@
   <!-- FontAwesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
 
-  <style>
+  <link rel="stylesheet" href="exercise.css">
+
+  <!-- <style>
     .container {
       width: 90%;
       max-width: 1000px;
@@ -70,12 +72,13 @@
       display: block;
       margin-bottom: 10px;
     }
-  </style>
+  </style> -->
 </head>
 
 <body>
 
   <!-- Navigation and Breadcrumb -->
+  <%- include('./partials/head.ejs') %>
   <%- include('./partials/nav.ejs') %>
   <%- include('partials/breadcrumb') %>
 
@@ -84,9 +87,9 @@
     <!-- Filter Box -->
     <div class="filter-box">
       <h4>Filter Workouts</h4>
-      <label><input type="checkbox" class="filter-checkbox" value="easy" checked> Easy</label>
-      <label><input type="checkbox" class="filter-checkbox" value="medium" checked> Medium</label>
-      <label><input type="checkbox" class="filter-checkbox" value="hard" checked> Hard</label>
+      <label><input type="checkbox" class="filter-checkbox" value="easy" checked> Easy <i class="fas fa-fire"></i></label>
+      <label><input type="checkbox" class="filter-checkbox" value="medium" checked> Medium <i class="fas fa-fire"></i></label>
+      <label><input type="checkbox" class="filter-checkbox" value="hard" checked> Hard <i class="fas fa-fire"></i></label>
     </div>
 
     <!-- Easy Section -->
