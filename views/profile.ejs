@@ -9,19 +9,43 @@
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous" />
     <style>
         /* Custom Calendar Styles */
+        #calendarContainer {
+            position: relative;
+            width: 100%;
+            max-width: 700px;
+            margin: 0 auto;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            background-color: white;
+            padding: 20px;
+        }
+
         #calendarControls {
             display: flex;
             justify-content: center;
+            align-items: center;
             margin-bottom: 20px;
         }
 
-        #calendar h3 {
-            text-align: center;
-            margin-bottom: 20px;
+        .calendar-arrow {
+            font-size: 24px;
+            cursor: pointer;
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .prev-arrow {
+            left: -40px;
+        }
+
+        .next-arrow {
+            right: -40px;
         }
 
         table {
             width: 100%;
+            margin-top: 10px;
         }
 
         th {
@@ -77,11 +101,19 @@
 
         <div class="box mt-4">
             <h2 class="text-center">ตารางการออกกำลังกาย</h2>
-            <div id="calendarControls" class="d-flex justify-content-center mb-3">
-                <select id="monthSelect" class="form-select w-auto me-2" onchange="updateCalendar()"></select>
-                <select id="yearSelect" class="form-select w-auto" onchange="updateCalendar()"></select>
+
+            <div id="calendarContainer">
+                <!-- Calendar arrows for previous and next month -->
+                <span class="calendar-arrow prev-arrow" onclick="prevMonth()">&#10094;</span>
+                <span class="calendar-arrow next-arrow" onclick="nextMonth()">&#10095;</span>
+
+                <!-- Calendar controls with dropdowns -->
+                <div id="calendarControls" class="d-flex justify-content-center mb-3">
+                    <select id="monthSelect" class="form-select w-auto me-2" onchange="updateCalendar()"></select>
+                    <select id="yearSelect" class="form-select w-auto" onchange="updateCalendar()"></select>
+                </div>
+                <div id="calendar"></div>
             </div>
-            <div id="calendar"></div>
         </div>
 
         <div class="box">
@@ -202,6 +234,37 @@
         currentMonth = parseInt(monthSelect.value);
         currentYear = parseInt(yearSelect.value);
         generateCalendar(currentYear, currentMonth);
+    }
+
+    // Function to move to the previous month
+    function prevMonth() {
+        currentMonth--;
+        if (currentMonth < 0) {
+            currentMonth = 11;
+            currentYear--;
+        }
+        updateCalendarSelectors();
+        generateCalendar(currentYear, currentMonth);
+    }
+
+    // Function to move to the next month
+    function nextMonth() {
+        currentMonth++;
+        if (currentMonth > 11) {
+            currentMonth = 0;
+            currentYear++;
+        }
+        updateCalendarSelectors();
+        generateCalendar(currentYear, currentMonth);
+    }
+
+    // Update the month and year selectors when month changes
+    function updateCalendarSelectors() {
+        const monthSelect = document.getElementById("monthSelect");
+        const yearSelect = document.getElementById("yearSelect");
+
+        monthSelect.value = currentMonth;
+        yearSelect.value = currentYear;
     }
 
     function populateDateSelectors() {
