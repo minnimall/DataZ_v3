@@ -12,56 +12,11 @@
     crossorigin="anonymous"
   />
 </head>
-<!-- <style>
-    .bmi-container {
-        width: 400px;
-        padding: 20px;
-        background: #ffffff;
-        border-radius: 8px;
-        box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
-        text-align: center;
-    }
-    .bmi-container h1 {
-        margin-bottom: 20px;
-        color: #333;
-    }
-    .bmi-container input[type="number"] {
-        width: 100%;
-        padding: 10px;
-        margin: 10px 0;
-        border: 1px solid #ddd;
-        border-radius: 5px;
-        font-size: 16px;
-    }
-    .bmi-container button {
-        width: 100%;
-        padding: 10px;
-        margin: 20px 0;
-        background-color: #28a745;
-        border: none;
-        border-radius: 5px;
-        color: #fff;
-        font-size: 16px;
-        cursor: pointer;
-    }
-    .bmi-container button:hover {
-        background-color: #218838;
-    }
-    .bmi-result {
-        margin-top: 20px;
-        font-size: 18px;
-        font-weight: bold;
-    }
-    .bmi-status {
-        margin-top: 10px;
-        font-size: 16px;
-        color: #007bff;
-    }
-</style> -->
 
 <body>
-    <%- include('./partials/head.ejs') %> <%- include('./partials/nav.ejs') %>
-            <%- include('partials/breadcrumb') %>
+    <%- include('./partials/head.ejs') %>
+    <%- include('./partials/nav.ejs') %>
+    <%- include('partials/breadcrumb') %>
 
     <div class="container">
         <div class="box">
@@ -69,40 +24,58 @@
                 <h2>โปรไฟล์ของผู้ใช้</h2>
                 <% if (user) { %>
                 <p><strong>ชื่อ:</strong> <%= user.username %></p>
-                <p>BMI: <span id="user-bmi"><%= user.bmi ? user.bmi : 'ไม่พบข้อมูล BMI' %></span></p>
+                <!-- เพิ่มการแสดงผล BMI และสถานะของ BMI -->
+                <p>
+                    BMI: 
+                    <span id="user-bmi"><%= user.bmi ? user.bmi : 'ไม่พบข้อมูล BMI' %></span> 
+                    <!-- กำหนดให้สถานะ BMI แสดงในบรรทัดเดียวกัน -->
+                    <span id="bmi-status-profile">
+                        <% if (user.bmi) { %>
+                            <% if (user.bmi < 18.5) { %>
+                                ผอม (น้ำหนักน้อยกว่ามาตรฐาน)
+                            <% } else if (user.bmi >= 18.5 && user.bmi < 24.9) { %>
+                                ปกติ (น้ำหนักปกติ)
+                            <% } else if (user.bmi >= 25 && user.bmi < 29.9) { %>
+                                อ้วน (น้ำหนักเกินมาตรฐาน)
+                            <% } else { %>
+                                โรคอ้วน (น้ำหนักมากกว่ามาตรฐาน)
+                            <% } %>
+                        <% } else { %>
+                            ไม่พบข้อมูลสถานะ BMI
+                        <% } %>
+                    </span>
+                </p>
                 <% } else { %>
                 <p>ไม่พบข้อมูลผู้ใช้</p>
                 <% } %>
             </div>
-            <div>
-                
+        </div>
+        
+
+        <div class="box mt-4">
+            <h2 class="text-center">ตารางการออกกำลังกาย</h2>
+            <div id="calendarControls" class="d-flex justify-content-center mb-3">
+                <select id="monthSelect" class="form-select w-auto me-2" onchange="updateCalendar()"></select>
+                <select id="yearSelect" class="form-select w-auto" onchange="updateCalendar()"></select>
+            </div>
+            <div id="calendar"></div>
+        </div>
+
+        <div class="box">
+            <h2>BMI</h2>
+            <div class="bmi-container">
+                <h1>BMI Calculator</h1>
+                <input type="number" id="weight" placeholder="Enter your weight in kg" min="1">
+                <input type="number" id="height" placeholder="Enter your height in cm" min="1">
+                <button onclick="calculateBMI()">Calculate BMI</button>
+                <div class="bmi-result" id="bmi-result"></div>
+                <div class="bmi-status" id="bmi-status"></div>
             </div>
         </div>
 
-      <div class="box mt-4">
-        <h2 class="text-center">ตารางการออกกำลังกาย</h2>
-        <div id="calendarControls" class="d-flex justify-content-center mb-3">
-          <select id="monthSelect" class="form-select w-auto me-2" onchange="updateCalendar()"></select>
-          <select id="yearSelect" class="form-select w-auto" onchange="updateCalendar()"></select>
+        <div class="box">
+            <h2>History</h2>
         </div>
-        <div id="calendar"></div>
-      </div>
-
-      <div class="box">
-        <h2>BMI</h2>
-        <div class="bmi-container">
-            <h1>BMI Calculator</h1>
-            <input type="number" id="weight" placeholder="Enter your weight in kg" min="1">
-            <input type="number" id="height" placeholder="Enter your height in cm" min="1">
-            <button onclick="calculateBMI()">Calculate BMI</button>
-            <div class="bmi-result" id="bmi-result"></div>
-            <div class="bmi-status" id="bmi-status"></div>
-        </div>
-      </div>
-
-      <div class="box">
-        <h2>History</h2>
-      </div>
     </div>
 </body>
 
@@ -131,7 +104,7 @@
             }
             document.getElementById("bmi-status").innerText = status;
 
-            // ส่งข้อมูล BMI ไปยังเซิร์ฟเวอร์เพื่อบันทึก
+            // ส่งข้อมูล BMI และสถานะไปยังเซิร์ฟเวอร์เพื่อบันทึก
             fetch("/save-bmi", {
                 method: "POST",
                 headers: {
@@ -140,14 +113,16 @@
                 body: JSON.stringify({
                     userId: "<%= user._id %>", // ใช้ userId ที่แท้จริงจากข้อมูลผู้ใช้
                     bmi: bmi,
+                    bmiStatus: status // เพิ่มการส่งข้อมูลสถานะไปยังเซิร์ฟเวอร์
                 }),
             })
                 .then((response) => response.json())
                 .then((data) => {
                     if (data.success) {
                         console.log("BMI saved successfully");
-                        // อัปเดตค่า BMI ที่แสดงในหน้าโปรไฟล์
+                        // อัปเดตค่า BMI และสถานะที่แสดงในหน้าโปรไฟล์
                         document.getElementById("user-bmi").innerText = bmi;
+                        document.getElementById("bmi-status-profile").innerText = status; // แสดงสถานะในโปรไฟล์
                     } else {
                         console.error("Error saving BMI:", data.message);
                     }
@@ -156,13 +131,12 @@
                     console.error("Error:", error);
                 });
         } else {
-            document.getElementById("bmi-result").innerText =
-                "Please enter valid weight and height!";
+            document.getElementById("bmi-result").innerText = "Please enter valid weight and height!";
             document.getElementById("bmi-status").innerText = "";
         }
     }
 
-    // Global variable to store the current month and year
+    // ส่วนของ Calendar ที่เพิ่มในโค้ดเดิม
     let currentYear = new Date().getFullYear();
     let currentMonth = new Date().getMonth();
 
@@ -255,37 +229,6 @@
         generateCalendar(currentYear, currentMonth);
     }
 
-    // Function to move to the previous month
-    function prevMonth() {
-        currentMonth--;
-        if (currentMonth < 0) {
-            currentMonth = 11;
-            currentYear--;
-        }
-        updateCalendarSelectors();
-        generateCalendar(currentYear, currentMonth);
-    }
-
-    // Function to move to the next month
-    function nextMonth() {
-        currentMonth++;
-        if (currentMonth > 11) {
-            currentMonth = 0;
-            currentYear++;
-        }
-        updateCalendarSelectors();
-        generateCalendar(currentYear, currentMonth);
-    }
-
-    // Update the month and year selectors when month changes
-    function updateCalendarSelectors() {
-        const monthSelect = document.getElementById("monthSelect");
-        const yearSelect = document.getElementById("yearSelect");
-
-        monthSelect.value = currentMonth;
-        yearSelect.value = currentYear;
-    }
-
     function populateDateSelectors() {
         const monthSelect = document.getElementById("monthSelect");
         const yearSelect = document.getElementById("yearSelect");
@@ -306,12 +249,11 @@
         }
 
         monthSelect.value = new Date().getMonth();
-        yearSelect.value = currentYear;
-
-        generateCalendar(currentYear, currentMonth);
+        yearSelect.value = new Date().getFullYear();
     }
 
-    populateDateSelectors();
+    window.onload = function () {
+        populateDateSelectors();
+        generateCalendar(currentYear, currentMonth);
+    };
 </script>
-
-
