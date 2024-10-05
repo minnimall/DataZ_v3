@@ -217,56 +217,60 @@
 
 <script>
     function calculateBMI() {
-      let weight = parseFloat(document.getElementById("weight").value);
-      let height = parseFloat(document.getElementById("height").value) / 100; // แปลงหน่วย cm เป็น m
-        if (weight && height) {
-            let bmi = weight / (height * height);
-            bmi = bmi.toFixed(2); // แสดงทศนิยม 2 ตำแหน่ง
+    let weight = parseFloat(document.getElementById("weight").value);
+    let height = parseFloat(document.getElementById("height").value) / 100; // แปลงหน่วย cm เป็น m
+    if (weight && height) {
+        let bmi = weight / (height * height);
+        bmi = bmi.toFixed(2); // แสดงทศนิยม 2 ตำแหน่ง
 
-            document.getElementById("bmi-result").innerText = `Your BMI: ${bmi}`;
+        document.getElementById("bmi-result").innerText = `Your BMI: ${bmi}`;
 
-            let status = "";
-            if (bmi < 18.5) {
-                status = "Underweight (น้ำหนักน้อยกว่ามาตรฐาน)";
-            } else if (bmi >= 18.5 && bmi < 24.9) {
-                status = "Normal weight (น้ำหนักปกติ)";
-            } else if (bmi >= 25 && bmi < 29.9) {
-                status = "Overweight (น้ำหนักเกินมาตรฐาน)";
-            } else {
-                status = "Obese (โรคอ้วน)";
-            }
-            document.getElementById("bmi-status").innerText = status;
-
-            // ส่งข้อมูล BMI ไปยังเซิร์ฟเวอร์เพื่อบันทึก
-            fetch("/save-bmi", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                    userId: "<%= user._id %>", // ใช้ userId ที่แท้จริงจากข้อมูลผู้ใช้
-                    bmi: bmi,
-                }),
-            })
-                .then((response) => response.json())
-                .then((data) => {
-                    if (data.success) {
-                        console.log("BMI saved successfully");
-                        // อัปเดตค่า BMI ที่แสดงในหน้าโปรไฟล์
-                        document.getElementById("user-bmi").innerText = bmi;
-                    } else {
-                        console.error("Error saving BMI:", data.message);
-                    }
-                })
-                .catch((error) => {
-                    console.error("Error:", error);
-                });
+        let status = "";
+        if (bmi < 18.5) {
+            status = "Underweight (น้ำหนักน้อยกว่ามาตรฐาน)";
+        } else if (bmi >= 18.5 && bmi < 24.9) {
+            status = "Normal weight (น้ำหนักปกติ)";
+        } else if (bmi >= 25 && bmi < 29.9) {
+            status = "Overweight (น้ำหนักเกินมาตรฐาน)";
         } else {
-          document.getElementById("bmi-result").innerText =
-                "Please enter valid weight and height!";
-            document.getElementById("bmi-status").innerText = "";
+            status = "Obese (โรคอ้วน)";
         }
+        document.getElementById("bmi-status").innerText = status;
+
+        // ส่งข้อมูล BMI ไปยังเซิร์ฟเวอร์เพื่อบันทึก
+        fetch("/save-bmi", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                userId: "<%= user._id %>", // ใช้ userId ที่แท้จริงจากข้อมูลผู้ใช้
+                bmi: bmi,
+            }),
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                if (data.success) {
+                    console.log("BMI saved successfully");
+                    // อัปเดตค่า BMI ที่แสดงในหน้าโปรไฟล์
+                    document.getElementById("user-bmi").innerText = bmi;
+
+                    // อัปเดตสถานะ BMI ในโปรไฟล์
+                    document.getElementById("bmi-status-profile").innerText = status;
+                } else {
+                    console.error("Error saving BMI:", data.message);
+                }
+            })
+            .catch((error) => {
+                console.error("Error:", error);
+            });
+    } else {
+        document.getElementById("bmi-result").innerText =
+            "Please enter valid weight and height!";
+        document.getElementById("bmi-status").innerText = "";
     }
+}
+
 
     // Global variable to store the current month and year
     let currentYear = new Date().getFullYear();
