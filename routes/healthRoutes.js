@@ -4,7 +4,7 @@ const router = express.Router()
 
 router.get('/', healthController.health_title)
 router.get('/insert', healthController.health_creat)
-router.get('/find/:id',healthController.getHealthDetail)
+router.post('/:id',healthController.getHealthDetail)
 router.get('/reset',healthController.resetHealthData)
 
 module.exports = router
