@@ -57,10 +57,24 @@ const redirectToLoginIfNotAuth = (req, res, next) => {
     }
 };
 
+// Middleware ส่ง breadcrumb ไปทุก view
+app.use((req, res, next) => {
+    const pathArray = req.path.split('/').filter((p) => p); // แปลง path เป็น array
+    const breadcrumbs = pathArray.map((p, index) => {
+        return {
+            name: p.charAt(0).toUpperCase() + p.slice(1), // เปลี่ยนชื่อเป็นตัวใหญ่ตัวแรก
+            url: '/' + pathArray.slice(0, index + 1).join('/')
+        };
+    });
+    res.locals.breadcrumbs = [{ name: 'Home', url: '/' }, ...breadcrumbs];
+    next();
+});
+
 // Route - หน้าแรก (เปลี่ยนเส้นทางไปที่ login เสมอ)
 app.get('/', redirectToLoginIfNotAuth, (req, res) => {
-    res.redirect('/login');
+    res.redirect('/first'); // เปลี่ยนเส้นทางไปที่หน้าแรกจริงๆ ของคุณแทนการไปที่ login
 });
+
 
 // ใช้ middleware ใน routes ที่ต้องการ
 app.use('/first', checkAuth, firstRoutes);
