@@ -1,15 +1,16 @@
 const mongoose = require('mongoose');
 
 const blogSchema = new mongoose.Schema({
+    userId: { 
+        type: mongoose.Schema.Types.ObjectId, 
+        ref: 'User', // อ้างอิงไปยัง User model
+        required: true 
+    },
     title: {
         type: String,
         required: true
     },
-    snippet: {
-        type: String,
-        required: true
-    },
-    body: {
+    content: {
         type: String,
         required: true
     },

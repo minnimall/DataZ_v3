@@ -12,8 +12,12 @@ const userSchema = new mongoose.Schema({
         required: true
     },
     bmi: {
-        type: Number, // หรือ String ขึ้นอยู่กับรูปแบบข้อมูลที่คุณต้องการ
-        default: null // เริ่มต้นเป็น null
+        type: Number,
+        default: null
+    },
+    createdAt: {
+        type: Date,
+        default: Date.now
     }
 });
 

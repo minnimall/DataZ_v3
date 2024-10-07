@@ -1,55 +1,42 @@
-const myBlog = require('../models/blogs')
+const Blog = require('../models/blogs')
+const User = require('../models/User');
 
-// blog_index
-const blog_index = (req, res)=> {
-    myBlog.find().sort( {createdAt: -1} )
-        .then((result)=> {
-            res.render('blogs/index', { mytitle: 'Home', blogs: result })
-        })
-        .catch((err) => {
-            console.log(err)
-        })
-}
+//blog create
+const blog_create = async (req, res) => {
+    const { title, content } = req.body; // รับค่า title และ content จาก request body
+    const username = req.session.username; // ดึง username จาก session
 
-// blog_create_post
-// ส่วนบันทึกข้อมูลที่นำไปใช้กับ form action
-const blog_creat_post = (req, res) => {
-    const blog = new myBlog(req.body)
+    try {
+        // ค้นหา user จาก username
+        const user = await User.findOne({ username: username });
 
-    blog.save()
-        .then((result)=> {
-            res.redirect('/blogs')
-        })
-        .catch((err)=> {
-            console.log(err)
-        })
-}
+        if (!user) {
+            return res.status(404).json({ success: false, message: "User not found" });
+        }
 
+        // สร้างบล็อกใหม่
+        const newBlog = new Blog({
+            userId: user._id, // ใช้ userId ของผู้ใช้ที่ล็อกอินอยู่
+            title,
+            content
+        });
 
-// blog_create_get
-// path ไปหน้า create.ejs สำหรับกรอกฟอร์ม
-const blog_create_get = (req, res)=>{
-    res.render('blogs/create', { mytitle: 'Create new blog'})
-}
+        // บันทึกบล็อกในฐานข้อมูล
+        await newBlog.save();
 
-// blog_detail
-const blog_detail = (req, res) => {
-    const bid = req.params.id
-    myBlog.findById(bid)
-        .then(result => {
-            res.render('blogs/details', { mytitle: 'Home',title: 'Blog Details', blog: result})
-        })
-        .catch(err => {
-            res.status(404).render('404', {mytitle: 'Blog not found' })
-        })
-}
+        res.redirect('/profile')
+    } catch (error) {
+        console.error("Error creating blog:", error);
+        return res.status(500).json({ success: false, message: "Error creating blog" });
+    }
+};
 
 // blog_delete
 const blog_delete = (req,res) => {
     const bid = req.params.id
-    myBlog.findByIdAndDelete(bid)
+    Blog.findByIdAndDelete(bid)
         .then(result => {
-            res.json({redirect: '/blogs'})
+            res.json({redirect: '/profile'})
         })
         .catch(err => {
             console.log(err)
@@ -59,7 +46,7 @@ const blog_delete = (req,res) => {
 // blog_edit_get
 const blog_edit_get = (req, res) => {
     const bid = req.params.id;
-    myBlog.findById(bid)
+    Blog.findById(bid)
         .then(result => {
             res.render('blogs/edit', { mytitle: 'Edit Blog', blog: result });
         })
@@ -72,9 +59,9 @@ const blog_edit_get = (req, res) => {
 const blog_update_put = (req, res) => {
     const bid = req.params.id;
 
-    myBlog.findByIdAndUpdate(bid, req.body, { new: true })
+    Blog.findByIdAndUpdate(bid, req.body, { new: true })
         .then(result => {
-            res.redirect(`/blogs/${bid}`);
+            res.redirect('/profile');
         })
         .catch(err => {
             console.log(err);
@@ -84,11 +71,9 @@ const blog_update_put = (req, res) => {
 
 // exports เพื่อให้ไฟล์อื่นสามารถเรียกใช้งานได้
 module.exports = {
-    blog_index,
-    blog_creat_post,
-    blog_create_get,
-    blog_detail,
+    blog_create,
     blog_delete,
-    blog_update_put,
-    blog_edit_get
+    blog_edit_get,
+    blog_update_put
+
 }
