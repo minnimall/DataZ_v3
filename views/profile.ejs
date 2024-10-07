@@ -127,18 +127,29 @@
         delblog.addEventListener('click', (e) => {
             e.preventDefault();
 
-            const endpoint = `/blogs/${delblog.dataset.id}`;
+            const confirmed = confirm("คุณแน่ใจว่าต้องการลบ Blog นี้หรือไม่?");
 
-            fetch(endpoint, {
-                method: 'DELETE'
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.redirect) {
-                    window.location.href = data.redirect;
-                }
-            })
-            .catch(err => console.log(err));
+            if (confirmed) {
+                const endpoint = `/blogs/${delblog.dataset.id}`;
+
+                fetch(endpoint, {
+                    method: 'DELETE'
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error("Network response was not ok");
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    if (data.redirect) {
+                        window.location.href = data.redirect;
+                    } else {
+                        delblog.closest('.blog').remove();
+                    }
+                })
+                .catch(err => console.log("Error deleting blog:", err));
+            }
         });
     });
 </script>

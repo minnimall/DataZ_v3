@@ -74,5 +74,4 @@ module.exports = {
     blog_delete,
     blog_edit_get,
     blog_update_put
-
 }
