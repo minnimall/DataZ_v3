@@ -2,31 +2,32 @@ const Blog = require('../models/blogs')
 const User = require('../models/User');
 
 //blog create
-const blog_create = async (req, res) => {
+const blog_create = (req, res) => {
     const { title, content } = req.body;
     const username = req.session.username; // ดึง username จาก session
 
-    try {
-        // ค้นหา user จาก username
-        const user = await User.findOne({ username: username });
+    // ค้นหา user จาก username
+    User.findOne({ username: username })
+        .then((user) => {
+            if (!user) {
+                return res.status(404).render('404', { mytitle: 'User not found' });
+            }
 
-        if (!user) {
-            return res.status(404).json({ success: false, message: "User not found" });
-        }
+            const newBlog = new Blog({
+                userId: user._id,
+                title,
+                content
+            });
 
-        const newBlog = new Blog({
-            userId: user._id,
-            title,
-            content
+            return newBlog.save();
+        })
+        .then(() => {
+            res.redirect('/profile');
+        })
+        .catch((error) => {
+            console.error("Error creating blog:", error);
+            return res.status(500).render('error', { mytitle: 'Error creating blog' });
         });
-
-        await newBlog.save();
-
-        res.redirect('/profile')
-    } catch (error) {
-        console.error("Error creating blog:", error);
-        return res.status(500).json({ success: false, message: "Error creating blog" });
-    }
 };
 
 // blog_delete
