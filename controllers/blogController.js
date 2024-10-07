@@ -3,7 +3,7 @@ const User = require('../models/User');
 
 //blog create
 const blog_create = async (req, res) => {
-    const { title, content } = req.body; // รับค่า title และ content จาก request body
+    const { title, content } = req.body;
     const username = req.session.username; // ดึง username จาก session
 
     try {
@@ -14,14 +14,12 @@ const blog_create = async (req, res) => {
             return res.status(404).json({ success: false, message: "User not found" });
         }
 
-        // สร้างบล็อกใหม่
         const newBlog = new Blog({
-            userId: user._id, // ใช้ userId ของผู้ใช้ที่ล็อกอินอยู่
+            userId: user._id,
             title,
             content
         });
 
-        // บันทึกบล็อกในฐานข้อมูล
         await newBlog.save();
 
         res.redirect('/profile')
