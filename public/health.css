@@ -107,3 +107,17 @@ footer {
 .article h2, .article h3 {
     margin: 0; /* ไม่มีระยะห่าง */
 }
+.box {
+  display: flex;
+  justify-content: space-between; /* จัดตำแหน่งให้ปุ่มอยู่ขวาและข้อความอยู่ซ้าย */
+  align-items: center; /* จัดแนวให้อยู่ตรงกลางในแนวตั้ง */
+  margin-bottom: 20px; /* เพิ่มระยะห่างด้านล่าง */
+}
+
+.box p {
+  margin: 0; /* ลบ margin ด้านบนและล่างของข้อความ */
+}
+
+.box .btn {
+  white-space: nowrap; /* ป้องกันปุ่มไม่ให้หักบรรทัด */
+}

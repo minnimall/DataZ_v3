@@ -19,23 +19,27 @@
     <%- include('./partials/nav.ejs') %>
     <%- include('partials/breadcrumb') %>
     
-    <a href="/health/create" class="btn btn-primary">Create New Article</a>
+
     <div class="container">
+      <div class="box d-flex justify-content-between align-items-center">
         <p>เรียนรู้เกี่ยวกับการดูแลสุขภาพและการใช้ชีวิตอย่างมีสุขภาพดี</p>
-        <% health.forEach(article => { %>
-        <div class="article" onclick="document.getElementById('form-<%= article._id %>').submit();" style="cursor: pointer;">
-            <form id="form-<%= article._id %>" action="/health/healthget/<%= article._id %>" method="POST" style="display: none;">
-                <input type="hidden" name="_method" value="POST">
-            </form>
-            <h2><%= article.Health_Title %></h2>
-            <h3><%= article.Sub_Title %></h3>
-            <p><%- article.Health_Detial.substring(0, 100) + '...' %></p> <!-- แสดงรายละเอียดบางส่วน -->
-        </div>
-        <form action="/health/delete/<%= article._id %>" method="POST" onsubmit="return confirm('คุณแน่ใจหรือไม่ว่าต้องการลบบทความนี้?');" style="display: inline;">
-          <input type="hidden" name="_method" value="DELETE">
-          <button type="submit" class="btn btn-danger">Delete</button>
+        <a href="/health/create" class="btn btn-primary">Create New Article</a>
+      </div>
+      <% health.forEach(article => { %>
+      <div class="article" onclick="document.getElementById('form-<%= article._id %>').submit();" style="cursor: pointer;">
+          <form id="form-<%= article._id %>" action="/health/healthget/<%= article._id %>" method="POST" style="display: none;">
+              <input type="hidden" name="_method" value="POST">
+          </form>
+          <h2><%= article.Health_Title %></h2>
+          <h3><%= article.Sub_Title %></h3>
+          <p><%- article.Health_Detial.substring(0, 100) + '...' %></p>
+      
+      <form action="/health/delete/<%= article._id %>" method="POST" onsubmit="return confirm('คุณแน่ใจหรือไม่ว่าต้องการลบบทความนี้?');" style="display: inline;">
+        <input type="hidden" name="_method" value="DELETE">
+        <button type="submit" class="btn btn-danger">Delete</button>
+      </div>
       </form>
-        <% }) %>
+      <% }) %>
     </div>
   </body>
 </html>
