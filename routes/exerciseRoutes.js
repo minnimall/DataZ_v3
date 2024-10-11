@@ -10,9 +10,9 @@ router.get('/', function(req, res, next) {
 //   res.render('Arm_Dumbbel');
 // });
 
-router.get('/Arm', function(req, res, next) {
-  res.render('Arm');
-});
+// router.get('/Arm', function(req, res, next) {
+//   res.render('Arm');
+// });
 router.get('/ABS', function(req, res, next) {
   res.render('ABS');
 });
