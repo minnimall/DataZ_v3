@@ -9,7 +9,9 @@ const healthRoutes = require('./routes/healthRoutes');
 const exerciseRoutes = require('./routes/exerciseRoutes');
 const armDumbbelRoutes = require('./routes/armDumbbelRoutes');
 const armRoutes = require('./routes/armRoutes');
-const legWorkoutRoutes = require('./routes/legWorkoutRoutes');
+const absRoutes = require('./routes/absRoutes');
+const legDumbbelRoutes = require('./routes/legDumbbelRouters')
+
 
 const methodOverride = require('method-override'); //สำหรับแก้ไขข้อมูล
 const bcrypt = require('bcryptjs');
@@ -17,6 +19,7 @@ const User = require('./models/User');
 const session = require('express-session');
 const Blog = require('./models/blogs');
 const bodyParser = require('body-parser'); // เพิ่มการนำเข้า body-parser
+const legDumbbel = require('./models/LegDumbbel');
 
 const app = express();
 
@@ -119,8 +122,9 @@ app.use('/blogs', checkAuth, blogRoutes);
 app.use('/health', checkAuth, healthRoutes);
 app.use('/exercise', checkAuth, exerciseRoutes);
 app.use('/arm-dumbbel', checkAuth, armDumbbelRoutes);
+app.use('/leg-dumbbel',checkAuth, legDumbbelRoutes)
 app.use('/arm', checkAuth, armRoutes);
-app.use('/leg-workout', checkAuth, legWorkoutRoutes);
+app.use('/abs', checkAuth, absRoutes);
 
 
 // Route - เกี่ยวกับ

@@ -1,13 +1,21 @@
 const myhealth = require('../models/health')
+const User = require('../models/User')
 
-const health_title = (req, res)=> {
-    myhealth.find()
-        .then((result)=> {
-            res.render('health', { title: 'Health Care Information', health: result })
-        })
-        .catch((err) => {
-            console.log(err)
-        })
+const health_title = async (req, res)=> {
+    try {
+        const health = await myhealth.find();
+        const username = req.session.username; // ดึง username จาก session
+        let user = null;
+    
+        if (username) {
+          user = await User.findOne({ username: username }); // ดึงข้อมูลผู้ใช้จากฐานข้อมูล
+        }
+    
+        res.render('health', { health, user }); // ส่งตัวแปร user ไปด้วย
+      } catch (error) {
+        console.error('Error loading :', error);
+        res.status(500).send('Error loading');
+      }
 }
 
 //ส่งข้อมููลตัวอย่าง ใน Health Care Information
@@ -308,6 +316,7 @@ const deleteHealthDetail = (req, res) => {
             res.status(500).send('Error deleting article'); // ข้อผิดพลาดในการลบ
         });
 };
+
 
 module.exports = {
     health_title,

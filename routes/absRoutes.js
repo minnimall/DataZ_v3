@@ -1,28 +1,28 @@
-// routes/armDumbbelRoutes.js
+
 const express = require('express');
 const router = express.Router();
-const Arm = require('../models/Arm');
+const Abs = require('../models/Abs');
 const User = require('../models/User')
 
-// Route สำหรับบันทึกข้อมูล Arm Dumbbel
+
 router.post('/add', async (req, res) => {
   const { title, videoUrl, imgUrl, description, duration, categories, difficulty, fireLevel } = req.body;
 
   try {
-    const arm = new Arm({ title, videoUrl, imgUrl, description, duration, categories, difficulty, fireLevel });
-    await arm.save();
-    res.redirect('/arm'); // เปลี่ยนเส้นทางไปที่หน้า Arm
+    const abs = new Abs({ title, videoUrl, imgUrl, description, duration, categories, difficulty, fireLevel });
+    await abs.save();
+    res.redirect('/abs'); 
   } catch (error) {
-    console.error('Error saving Arm :', error);
-    res.status(500).send('Error saving Arm ');
+    console.error('Error saving abs :', error);
+    res.status(500).send('Error saving abs ');
   }
 });
 
 
-// routes/armDumbbelRoutes.js
+
 router.get('/', async (req, res) => {
     try {
-      const armExercises = await Arm.find();
+      const absExercises = await Abs.find();
       const username = req.session.username; // ดึง username จาก session
       let user = null;
   
@@ -30,7 +30,7 @@ router.get('/', async (req, res) => {
         user = await User.findOne({ username: username }); // ดึงข้อมูลผู้ใช้จากฐานข้อมูล
       }
   
-      res.render('arm', { armExercises, user }); // ส่งตัวแปร user ไปด้วย
+      res.render('abs', { absExercises, user }); // ส่งตัวแปร user ไปด้วย
     } catch (error) {
       console.error('Error loading Arm  exercises:', error);
       res.status(500).send('Error loading Arm  exercises');
@@ -40,16 +40,16 @@ router.get('/', async (req, res) => {
 
 //// ใน armDumbbelRoutes.js
 // armDumbbelRoutes.js
-router.get('/arm', async (req, res, next) => {
-    const armExercises = [
+router.get('/abs', async (req, res, next) => {
+    const absExercises = [
         // รายการการออกกำลังกายที่นี่
     ];
 
     // แยกการออกกำลังกายตามระดับความยาก
     const exercises = {
-        easy: armExercises.filter(exercise => exercise.difficulty === 'easy'),
-        medium: armExercises.filter(exercise => exercise.difficulty === 'medium'),
-        hard: armExercises.filter(exercise => exercise.difficulty === 'hard')
+        easy: absExercises.filter(exercise => exercise.difficulty === 'easy'),
+        medium: absExercises.filter(exercise => exercise.difficulty === 'medium'),
+        hard: absExercises.filter(exercise => exercise.difficulty === 'hard')
     };
 
     const username = req.session.username;
@@ -59,7 +59,7 @@ router.get('/arm', async (req, res, next) => {
         user = await User.findOne({ username: username }); // ดึงข้อมูลผู้ใช้จากฐานข้อมูล
     }
 
-    res.render('Arm', { exercises, user });
+    res.render('abs', { exercises, user });
 });
 
 
@@ -67,7 +67,7 @@ router.get('/arm', async (req, res, next) => {
 router.delete('/delete/:id', async (req, res) => {
   try {
     const exerciseId = req.params.id;
-    await Arm.findByIdAndDelete(exerciseId); // ค้นหาและลบการออกกำลังกาย
+    await Abs.findByIdAndDelete(exerciseId); // ค้นหาและลบการออกกำลังกาย
     res.status(200).json({ message: 'Exercise deleted successfully' });
   } catch (error) {
     console.error('Error deleting exercise:', error);
@@ -87,8 +87,8 @@ router.post('/edit/:id', async (req, res) => {
       imgUrl: req.body.imgUrl,
       videoUrl: req.body.videoUrl
     };
-    await Arm.findByIdAndUpdate(exerciseId, updatedData);
-    res.redirect('/arm');
+    await Abs.findByIdAndUpdate(exerciseId, updatedData);
+    res.redirect('/abs');
   } catch (error) {
     console.error('Error updating exercise:', error);
     res.status(500).send('Error updating exercise');
