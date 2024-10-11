@@ -65,6 +65,24 @@ const checkAuth = (req, res, next) => {
     }
 };
 
+// ตรวจสอบว่าเป็น admin หรือไม่
+const checkAdmin = (req, res, next) => {
+    if (req.session.role === 'admin') { // ตรวจสอบ role ของผู้ใช้
+        next(); // อนุญาตให้เข้าถึงหากเป็น admin
+    } else {
+        res.status(403).send('คุณไม่มีสิทธิ์ในการเข้าถึงหน้านี้'); // แสดงข้อผิดพลาดหากไม่ใช่ admin
+    }
+}
+
+// ตรวจสอบว่าเป็น user หรือไม่
+const checkUser = (req, res, next) => {
+    if (req.session.role === 'user') { // ตรวจสอบ role ของผู้ใช้
+        next(); // อนุญาตให้เข้าถึงหากเป็น user
+    } else {
+        res.status(403).send('คุณไม่มีสิทธิ์ในการเข้าถึงหน้านี้'); // แสดงข้อผิดพลาดหากไม่ใช่ user
+    }
+}
+
 
 // Middleware ส่ง breadcrumb ไปทุก view
 app.use((req, res, next) => {
@@ -90,11 +108,11 @@ app.get('/', (req, res) => {
 });
 
 // ใช้ middleware ใน routes ที่ต้องการ
-app.use('/home', checkAuth, firstRoutes);
-app.use('/profile', checkAuth, profileRoutes);
-app.use('/blogs', checkAuth, blogRoutes);
-app.use('/health', checkAuth, healthRoutes);
-app.use('/exercise', checkAuth, exerciseRoutes);
+app.use('/home', checkAuth,firstRoutes);
+app.use('/profile', checkAuth,profileRoutes);
+app.use('/blogs', checkAuth,blogRoutes);
+app.use('/health', checkAuth,healthRoutes);
+app.use('/exercise', checkAuth,exerciseRoutes);
 
 // Route - เกี่ยวกับ
 app.get('/about', (req, res) => {
@@ -125,7 +143,8 @@ app.post('/register', async (req, res) => {
 
         user = new User({
             username,
-            password: hashedPassword
+            password: hashedPassword,
+            role: 'user' // กำหนด role เป็น 'user' เสมอสำหรับการสมัครสมาชิก
         });
 
         await user.save();
@@ -156,15 +175,25 @@ app.post('/login', async (req, res) => {
         }
 
         req.session.username = user.username; // บันทึกชื่อผู้ใช้ใน session
-        res.redirect('/home'); // เปลี่ยนเส้นทางไปยังหน้าหลัก
+        req.session.role = user.role; // บันทึก role ของผู้ใช้ใน session
+
+        // ตรวจสอบบทบาท (role) ของผู้ใช้และเปลี่ยนเส้นทางตามบทบาท
+        if (user.role === 'admin') {
+            res.redirect('/home'); // เปลี่ยนเส้นทางไปยังหน้าของ admin
+        } else if (user.role === 'user') {
+            res.redirect('/home'); // เปลี่ยนเส้นทางไปยังหน้าหลักสำหรับ user
+        } else {
+            res.status(403).send('ไม่สามารถเข้าถึงได้'); // กรณีที่มี role อื่น ๆ ที่ไม่ถูกต้อง
+        }
     } catch (err) {
         console.error('Login error:', err);
         res.status(500).send('เกิดข้อผิดพลาด');
     }
 });
 
+
 // Route - Dashboard
-app.get('/dashboard', checkAuth, (req, res) => {
+app.get('/dashboard', checkAuth,checkAdmin, (req, res) => {
     res.render('dashboard', { title: 'Dashboard' });
 });
 

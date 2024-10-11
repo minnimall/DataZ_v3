@@ -6,7 +6,16 @@
     <title><%= title %></title>
 </head>
 <body>
-    <h1>Welcome to Dashboard</h1>
-    <a href="/logout">Logout</a>
+    <%- include('./partials/head.ejs') %> 
+    <%- include('./partials/nav.ejs') %>
+    <%- include('partials/breadcrumb') %>
+
+    <div class="container">
+        <div class="box">
+            <h2>Welcome to Dashboard</h2>
+            
+        </div>
+    </div>
+
 </body>
 </html>

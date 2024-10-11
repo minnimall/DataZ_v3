@@ -18,11 +18,13 @@
     <%- include('partials/breadcrumb') %>
 
     <div class="container article">
-    <h1><%= article.Health_Title %></h1><br><br>
-      <h3><%= article.Sub_Title %></h3>
-      <p><%- article.Health_Detial %></p>
+      <div class="box">
+          <h1><%= article.Health_Title %></h1><br><br>
+          <h3><%= article.Sub_Title %></h3>
+          <p><%- article.Health_Detial %></p>
 
-      <a class="d-block text-end" href="/health">กลับไปยังหน้าบทความทั้งหมด</a>
+          <a class="d-block text-end" href="/health">กลับไปยังหน้าบทความทั้งหมด</a>
+      </div>
     </div>
 
   </body>
