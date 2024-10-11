@@ -213,6 +213,47 @@ const health_creat = (req, res) => {
         });
 }
 
+// const health_creat_input = async(req, res) => {
+//     const { Health_Title, Sub_Title, Health_Detial } = req.body;
+
+//     const newHealth ={
+//         Health_Title,
+//         Sub_Title,
+//         Health_Detial
+//     };
+
+//     myhealth.insertMany(newHealth)
+//     .then((result) => {
+//         console.log(Health_Detial)
+//         console.log("ตัวอย่างข้อมูลถูกเพิ่มเรียบร้อยแล้ว");
+//         res.redirect('/health'); // เปลี่ยนเป็นเส้นทางที่เหมาะสมตามที่คุณต้องการ
+//     })
+//     .catch((err) => {
+//         console.log(err);
+//     });
+    
+// };
+
+const health_creat_input = async (req, res) => {
+    const { Health_Title, Sub_Title, Health_Detial } = req.body;
+
+    console.log('ข้อมูลที่ได้รับ:', { Health_Title, Sub_Title, Health_Detial }); // ตรวจสอบว่ามี HTML หรือไม่
+
+    const newHealthArticle = new myhealth({
+        Health_Title, 
+        Sub_Title,
+        Health_Detial // ให้แน่ใจว่า Health_Detial มีค่า HTML
+    });
+
+    try {
+        await newHealthArticle.save();
+        res.redirect('/health');;
+    } catch (error) {
+        console.error('Error saving article:', error);
+        res.status(500).send('เกิดข้อผิดพลาดในการบันทึกบทความ');
+    }
+};
+
 const resetHealthData = (req, res) => {
     myhealth.deleteMany({})
         .then(result => {
@@ -251,9 +292,28 @@ const getHealthDetail = (req, res) => {
         });
 };
 
+const deleteHealthDetail = (req, res) => {
+    const articleId = req.params.id; // รับค่า id ของบทความจาก URL
+
+    myhealth.findByIdAndDelete(articleId)
+        .then(result => {
+            if (result) {
+                res.redirect('/health'); // หลังจากลบสำเร็จ ให้รีไดเร็กไปยังหน้ารายการบทความ
+            } else {
+                res.status(404).send('Article not found'); // หากไม่เจอบทความ
+            }
+        })
+        .catch(err => {
+            console.log(err);
+            res.status(500).send('Error deleting article'); // ข้อผิดพลาดในการลบ
+        });
+};
+
 module.exports = {
     health_title,
     health_creat,
     getHealthDetail,
-    resetHealthData
+    resetHealthData,
+    health_creat_input,
+    deleteHealthDetail
 }
