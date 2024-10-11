@@ -166,11 +166,13 @@
                                 <% } %>
                             </div>
 
+                            <% if (user && user.role === 'admin') { %>
                             <!-- ปุ่มแก้ไข -->
                             <button class="btn btn-warning edit-btn" data-id="<%= exercise._id %>">Edit</button>
-
                             <!-- ปุ่มลบ -->
                             <button class="btn btn-danger delete-btn" data-id="<%= exercise._id %>">Delete</button>
+                            <% } %>
+                            
 
                             <!-- ฟอร์มสำหรับแก้ไขข้อมูล -->
                             <div id="editForm-<%= exercise._id %>" class="edit-form">
@@ -243,11 +245,12 @@
                                 <% } %>
                             </div>
 
+                            <% if (user && user.role === 'admin') { %>
                             <!-- ปุ่มแก้ไข -->
                             <button class="btn btn-warning edit-btn" data-id="<%= exercise._id %>">Edit</button>
-
                             <!-- ปุ่มลบ -->
                             <button class="btn btn-danger delete-btn" data-id="<%= exercise._id %>">Delete</button>
+                            <% } %>
 
                             <!-- ฟอร์มสำหรับแก้ไขข้อมูล -->
                             <div id="editForm-<%= exercise._id %>" class="edit-form">
@@ -320,11 +323,12 @@
                                 <% } %>
                             </div>
 
-                            <!-- ปุ่มแก้ไข -->
-                            <button class="btn btn-warning edit-btn" data-id="<%= exercise._id %>">Edit</button>
-
-                            <!-- ปุ่มลบ -->
-                            <button class="btn btn-danger delete-btn" data-id="<%= exercise._id %>">Delete</button>
+                            <% if (user && user.role === 'admin') { %>
+                                <!-- ปุ่มแก้ไข -->
+                                <button class="btn btn-warning edit-btn" data-id="<%= exercise._id %>">Edit</button>
+                                <!-- ปุ่มลบ -->
+                                <button class="btn btn-danger delete-btn" data-id="<%= exercise._id %>">Delete</button>
+                                <% } %>
 
                             <!-- ฟอร์มสำหรับแก้ไขข้อมูล -->
                             <div id="editForm-<%= exercise._id %>" class="edit-form">
@@ -367,8 +371,12 @@
 
 
             </div>
-<!-- Fixed button -->
-<button class="add-button" id="addButton"><i class="fas fa-plus"></i></button>
+<!-- ปุ่มเพิ่มข้อมูลใหม่ เฉพาะ admin -->
+<% if (user && user.role === 'admin') { %>
+    <div class="add-button">
+        <button class="add-button" id="addButton"><i class="fas fa-plus"></i></button>
+    </div>
+<% } %>
 
 <!-- Add Exercise Form -->
 <div class="add-exercise-form" id="exerciseForm">
