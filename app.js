@@ -9,7 +9,7 @@ const healthRoutes = require('./routes/healthRoutes');
 const exerciseRoutes = require('./routes/exerciseRoutes');
 const armDumbbelRoutes = require('./routes/armDumbbelRoutes');
 const armRoutes = require('./routes/armRoutes');
-
+const legWorkoutRoutes = require('./routes/legWorkoutRoutes');
 
 const methodOverride = require('method-override'); //สำหรับแก้ไขข้อมูล
 const bcrypt = require('bcryptjs');
@@ -120,6 +120,7 @@ app.use('/health', checkAuth, healthRoutes);
 app.use('/exercise', checkAuth, exerciseRoutes);
 app.use('/arm-dumbbel', checkAuth, armDumbbelRoutes);
 app.use('/arm', checkAuth, armRoutes);
+app.use('/leg-workout', checkAuth, legWorkoutRoutes);
 
 
 // Route - เกี่ยวกับ
