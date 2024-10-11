@@ -11,7 +11,7 @@ const armDumbbelRoutes = require('./routes/armDumbbelRoutes');
 const armRoutes = require('./routes/armRoutes');
 const absRoutes = require('./routes/absRoutes');
 const legDumbbelRoutes = require('./routes/legDumbbelRouters')
-
+const legWorkoutRoutes = require('./routes/legWorkoutRoutes');
 
 const methodOverride = require('method-override'); //สำหรับแก้ไขข้อมูล
 const bcrypt = require('bcryptjs');
@@ -125,7 +125,7 @@ app.use('/arm-dumbbel', checkAuth, armDumbbelRoutes);
 app.use('/leg-dumbbel',checkAuth, legDumbbelRoutes)
 app.use('/arm', checkAuth, armRoutes);
 app.use('/abs', checkAuth, absRoutes);
-
+app.use('/leg-workout',checkAuth, legWorkoutRoutes)
 
 // Route - เกี่ยวกับ
 app.get('/about', (req, res) => {
