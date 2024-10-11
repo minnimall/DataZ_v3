@@ -11,13 +11,15 @@
     justify-content: center;
 }
 
+/* Overlay ปรับปรุงใหม่ให้ไล่สี */
 .overlay {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.5); /* สีดำโปร่งแสง */
+    background: linear-gradient(135deg, rgba(0, 0, 0, 0.8), rgba(255, 0, 0, 0.4)); /* ไล่สีจากดำไปแดงโปร่งแสง */
+    z-index: 1;
 }
 
 .content {
@@ -25,6 +27,19 @@
     z-index: 2;
     text-align: center;
     color: #fff;
+    animation: fadeIn 1.5s ease-out;
+}
+
+/* การเคลื่อนไหวเมื่อโหลดหน้าเว็บ */
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 .content h1 {
@@ -40,19 +55,64 @@
     text-shadow: 1px 1px 6px rgba(0, 0, 0, 0.5);
 }
 
+/* Glassmorphism button */
 .btn-main {
     padding: 15px 30px;
     font-size: 1.2em;
     color: #fff;
-    background-color: #ff0000;
-    border: none;
-    border-radius: 5px;
+    background: rgba(255, 255, 255, 0.2); /* สีโปร่งแสง */
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 12px;
+    backdrop-filter: blur(10px); /* เอฟเฟกต์ Glassmorphism */
     text-decoration: none;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
-    transition: background-color 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
 .btn-main:hover {
-    background-color: #cc0000;
+    background-color: rgba(255, 255, 255, 0.3); /* เพิ่มความเข้มเมื่อ hover */
+    transform: scale(1.05); /* ขยายปุ่มเล็กน้อยเมื่อ hover */
     cursor: pointer;
 }
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .content h1 {
+        font-size: 2.5em;
+    }
+    .content p {
+        font-size: 1.2em;
+    }
+    .btn-main {
+        padding: 12px 25px;
+        font-size: 1em;
+    }
+}
+
+@media (max-width: 576px) {
+    .content h1 {
+        font-size: 2em;
+    }
+    .content p {
+        font-size: 1em;
+    }
+    .btn-main {
+        padding: 10px 20px;
+        font-size: 0.9em;
+    }
+    
+}
+.footer-simple {
+    background-color: #222; /* สีพื้นหลังเข้ม */
+    color: #fff; /* สีตัวอักษรขาว */
+    padding: 20px 0; /* ระยะห่างบน-ล่าง */
+    text-align: center; /* จัดข้อความไว้ตรงกลาง */
+  }
+  
+  .footer-simple p {
+    margin: 0;
+    font-family: 'Kanit', sans-serif; /* ฟอนต์ Kanit */
+    font-size: 1em;
+    opacity: 0.8; /* เพิ่มความโปร่งแสงของตัวอักษรให้ดูเรียบ */
+  }
+  
