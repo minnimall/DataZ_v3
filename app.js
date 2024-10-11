@@ -5,7 +5,11 @@ const blogRoutes = require('./routes/blogRoutes');
 const firstRoutes = require('./routes/firstRoutes');
 const profileRoutes = require('./routes/profileRoutes');
 const healthRoutes = require('./routes/healthRoutes');
+
 const exerciseRoutes = require('./routes/exerciseRoutes');
+const armDumbbelRoutes = require('./routes/armDumbbelRoutes');
+const armRoutes = require('./routes/armRoutes');
+
 const methodOverride = require('method-override'); //สำหรับแก้ไขข้อมูล
 const bcrypt = require('bcryptjs');
 const User = require('./models/User');
@@ -108,11 +112,13 @@ app.get('/', (req, res) => {
 });
 
 // ใช้ middleware ใน routes ที่ต้องการ
-app.use('/home', checkAuth,firstRoutes);
-app.use('/profile', checkAuth,profileRoutes);
-app.use('/blogs', checkAuth,blogRoutes);
-app.use('/health', checkAuth,healthRoutes);
-app.use('/exercise', checkAuth,exerciseRoutes);
+app.use('/home', checkAuth, firstRoutes);
+app.use('/profile', checkAuth, profileRoutes);
+app.use('/blogs', checkAuth, blogRoutes);
+app.use('/health', checkAuth, healthRoutes);
+app.use('/exercise', checkAuth, exerciseRoutes);
+app.use('/arm-dumbbel', checkAuth, armDumbbelRoutes);
+app.use('/arm', checkAuth, armRoutes);
 
 // Route - เกี่ยวกับ
 app.get('/about', (req, res) => {
@@ -207,3 +213,6 @@ app.get('/logout', (req, res) => {
 app.use((req, res) => {
     res.status(404).render('404', { mytitle: '404' });
 });
+
+
+

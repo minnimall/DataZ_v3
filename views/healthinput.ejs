@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Health Article Creator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            padding: 20px;
+            background-color: #f4f4f9;
+        }
+        h1 {
+            text-align: center;
+        }
+        form {
+            max-width: 800px;
+            margin: auto;
+            padding: 20px;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+        }
+        label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+        input[type="text"], textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        textarea {
+            min-height: 200px;
+        }
+        button {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+        .preview {
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #fff;
+        }
+    </style>
+</head>
+<body>
+    <%- include('./partials/head.ejs') %>
+    <%- include('./partials/nav.ejs') %>
+    <%- include('partials/breadcrumb') %>
+<div class="container">
+    <h1>สร้างบทความสุขภาพ</h1>
+
+    <form action="/health/create" method="POST" onsubmit="return processForm()">
+        <label for="Health_Title">ชื่อบทความ</label>
+        <input type="text" id="Health_Title" name="Health_Title" placeholder="กรอกชื่อบทความ" required>
+
+        <label for="Sub_Title">คำอธิบายย่อย</label>
+        <input type="text" id="Sub_Title" name="Sub_Title" placeholder="กรอกคำอธิบายย่อย" required>
+
+        <label for="Health_Detial">รายละเอียดบทความ </label>
+        <textarea id="Health_Detial" name="Health_Detial" placeholder="กรอกรายละเอียดบทความ หากต้องการเพิ่มตัวหน้าพิมพ์ <Strong> ตัวหนา </Strong>" required oninput="updatePreview()"></textarea>
+        <button type="submit">บันทึกบทความ</button>
+    </form>
+
+    <div class="preview">
+        <h2>ตัวอย่างบทความ:</h2>
+        <div id="articlePreview"></div>
+    </div>
+    
+</div>
+
+
+    <script>
+        function processForm() {
+            const healthDetail = document.getElementById('Health_Detial').value;
+
+            // แทนที่การขึ้นบรรทัดด้วย <br> และ wrap ด้วย <p>
+            const formattedDetail = healthDetail
+                .replace(/(\r\n|\n|\r)/g, '<br>') // แทนที่การขึ้นบรรทัดด้วย <br>
+                .split(/<br>/) // แยกบรรทัดที่เป็น <br>
+                .map(line => line.trim()) // ตัดช่องว่าง
+                .filter(line => line.length > 0 || line === "") // เก็บบรรทัดที่ว่าง
+                .map(line => line === "" ? "<br>" : `<p>${line}</p>`) // Wrap ด้วย <p> หรือ <br> ถ้าว่าง
+                .join(''); // รวมเป็น string
+            
+            // ส่งข้อมูลที่จัดรูปแบบแล้ว
+            document.getElementById('Health_Detial').value = formattedDetail; 
+
+            return true; // ให้ส่งฟอร์ม
+        }
+
+        function updatePreview() {
+            const healthDetail = document.getElementById('Health_Detial').value;
+
+            // อัปเดตการแสดงผลในตัวอย่างบทความ
+            const formattedDetail = healthDetail
+                .replace(/(\r\n|\n|\r)/g, '<br>') // แทนที่การขึ้นบรรทัดด้วย <br>
+                .split(/<br>/) // แยกบรรทัดที่เป็น <br>
+                .map(line => line.trim()) // ตัดช่องว่าง
+                .filter(line => line.length > 0 || line === "") // เก็บบรรทัดที่ว่าง
+                .map(line => line === "" ? "<br>" : `<p>${line}</p>`) // Wrap ด้วย <p> หรือ <br> ถ้าว่าง
+                .join(''); // รวมเป็น string
+            
+            document.getElementById('articlePreview').innerHTML = formattedDetail; // อัปเดตการแสดงผล
+        }
+    
+
+    </script>
+
+</body>
+</html>
