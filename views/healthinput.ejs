@@ -64,23 +64,25 @@
     <%- include('./partials/nav.ejs') %>
     <%- include('partials/breadcrumb') %>
 <div class="container">
-    <h1>สร้างบทความสุขภาพ</h1>
+    <div class="box">
+        <h1>สร้างบทความสุขภาพ</h1>
 
-    <form action="/health/create" method="POST" onsubmit="return processForm()">
-        <label for="Health_Title">ชื่อบทความ</label>
-        <input type="text" id="Health_Title" name="Health_Title" placeholder="กรอกชื่อบทความ" required>
-
-        <label for="Sub_Title">คำอธิบายย่อย</label>
-        <input type="text" id="Sub_Title" name="Sub_Title" placeholder="กรอกคำอธิบายย่อย" required>
-
-        <label for="Health_Detial">รายละเอียดบทความ </label>
-        <textarea id="Health_Detial" name="Health_Detial" placeholder="กรอกรายละเอียดบทความ หากต้องการเพิ่มตัวหน้าพิมพ์ <Strong> ตัวหนา </Strong>" required oninput="updatePreview()"></textarea>
-        <button type="submit">บันทึกบทความ</button>
-    </form>
-
-    <div class="preview">
-        <h2>ตัวอย่างบทความ:</h2>
-        <div id="articlePreview"></div>
+        <form action="/health/create" method="POST" onsubmit="return processForm()">
+            <label for="Health_Title">ชื่อบทความ</label>
+            <input type="text" id="Health_Title" name="Health_Title" placeholder="กรอกชื่อบทความ" required>
+    
+            <label for="Sub_Title">คำอธิบายย่อย</label>
+            <input type="text" id="Sub_Title" name="Sub_Title" placeholder="กรอกคำอธิบายย่อย" required>
+    
+            <label for="Health_Detial">รายละเอียดบทความ </label>
+            <textarea id="Health_Detial" name="Health_Detial" placeholder="กรอกรายละเอียดบทความ หากต้องการเพิ่มตัวหน้าพิมพ์ <Strong> ตัวหนา </Strong>" required oninput="updatePreview()"></textarea>
+            <button type="submit">บันทึกบทความ</button>
+        </form>
+    
+        <div class="preview">
+            <h2>ตัวอย่างบทความ:</h2>
+            <div id="articlePreview"></div>
+        </div>
     </div>
     
 </div>
