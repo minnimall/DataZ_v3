@@ -3,12 +3,21 @@
     position: relative;
     width: 100%;
     height: 100vh;
-    background-image: url('/background-home.jpg'); 
     background-size: cover;
     background-position: center;
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+.video-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: -1;
 }
 
 /* Overlay ปรับปรุงใหม่ให้ไล่สี */
@@ -18,7 +27,7 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(135deg, rgba(0, 0, 0, 0.8), rgba(255, 0, 0, 0.4)); /* ไล่สีจากดำไปแดงโปร่งแสง */
+    /* background: linear-gradient(137deg, rgba(0, 0, 0, 0.8), rgba(255, 0, 0, 0.4)); ไล่สีจากดำไปแดงโปร่งแสง */
     z-index: 1;
 }
 
@@ -60,8 +69,8 @@
     padding: 15px 30px;
     font-size: 1.2em;
     color: #fff;
-    background: rgba(255, 255, 255, 0.2); /* สีโปร่งแสง */
-    border: 1px solid rgba(255, 255, 255, 0.3);
+    background: rgba(247, 2, 2, 0.2); /* สีโปร่งแสง */
+    border: 1px solid rgba(241, 69, 69, 0.3);
     border-radius: 12px;
     backdrop-filter: blur(10px); /* เอฟเฟกต์ Glassmorphism */
     text-decoration: none;
@@ -70,7 +79,7 @@
 }
 
 .btn-main:hover {
-    background-color: rgba(255, 255, 255, 0.3); /* เพิ่มความเข้มเมื่อ hover */
+    background-color: rgba(255, 0, 0, 0.3); /* เพิ่มความเข้มเมื่อ hover */
     transform: scale(1.05); /* ขยายปุ่มเล็กน้อยเมื่อ hover */
     cursor: pointer;
 }
@@ -102,17 +111,17 @@
     }
     
 }
+
 .footer-simple {
     background-color: #222; /* สีพื้นหลังเข้ม */
     color: #fff; /* สีตัวอักษรขาว */
     padding: 20px 0; /* ระยะห่างบน-ล่าง */
     text-align: center; /* จัดข้อความไว้ตรงกลาง */
-  }
+}
   
-  .footer-simple p {
+.footer-simple p {
     margin: 0;
     font-family: 'Kanit', sans-serif; /* ฟอนต์ Kanit */
     font-size: 1em;
     opacity: 0.8; /* เพิ่มความโปร่งแสงของตัวอักษรให้ดูเรียบ */
-  }
-  
+}

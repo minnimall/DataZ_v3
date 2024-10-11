@@ -17,15 +17,22 @@
   <%- include('./partials/nav.ejs') %>
   <%- include('partials/breadcrumb') %>
 
- <!-- พื้นหลังที่เป็นภาพ -->
+ 
+ <!-- วิดีโอพื้นหลัง -->
  <div class="hero-section">
+  <video class="video-background" autoplay muted loop>
+    <source src="https://videos.pexels.com/video-files/5319759/5319759-uhd_2560_1440_25fps.mp4" type="video/mp4">
+    Your browser does not support the video tag.
+  </video>
   <div class="overlay"></div>
   <div class="content">
+    
       <h1>เปลี่ยนพุงเป็นพลัง</h1>
       <p>เริ่มออกกำลังกายได้แล้ววันนี้เลือกรูปแบบการออกกำลังกายในแบบของคุณ</p>
       <a href="/exercise" class="btn-main">ออกกำลังกาย</a>
   </div>
 </div>
+
 <!-- Footer แบบเรียบง่าย -->
 <footer class="footer-simple bg-dark text-white py-3">
   <div class="container text-center">
