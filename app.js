@@ -5,6 +5,7 @@ const blogRoutes = require('./routes/blogRoutes');
 const firstRoutes = require('./routes/firstRoutes');
 const profileRoutes = require('./routes/profileRoutes');
 const healthRoutes = require('./routes/healthRoutes');
+const cadioRoutes = require('./routes/cadioRoutes');
 
 const exerciseRoutes = require('./routes/exerciseRoutes');
 const armDumbbelRoutes = require('./routes/armDumbbelRoutes');
@@ -122,6 +123,7 @@ app.use('/exercise', checkAuth, exerciseRoutes);
 app.use('/arm-dumbbel', checkAuth, armDumbbelRoutes);
 app.use('/arm', checkAuth, armRoutes);
 app.use('/abs', checkAuth, absRoutes);
+app.use('/cadio', checkAuth, cadioRoutes)
 
 
 // Route - เกี่ยวกับ

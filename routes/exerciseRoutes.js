@@ -22,8 +22,8 @@ router.get('/Leg_Dumbbel', function(req, res, next) {
 router.get('/Leg', function(req, res, next) {
   res.render('Leg');
 });
-router.get('/Cardio', function(req, res, next) {
-  res.render('Cardio');
-});
+// router.get('/Cardio', function(req, res, next) {
+//   res.render('Cardio');
+// });
 
 module.exports = router;
